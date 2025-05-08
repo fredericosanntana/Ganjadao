@@ -1,26 +1,4 @@
 services:
-  traefik:
-    image: traefik:v2.10
-    container_name: traefik
-    restart: always
-    command:
-      - --api.insecure=true                             # dashboard sem auth (remova em produção)
-      - --providers.docker=true                         # lê containers via labels
-      - --entrypoints.web.address=:80                   # HTTP
-      - --entrypoints.websecure.address=:443            # HTTPS
-      - --certificatesresolvers.myresolver.acme.tlschallenge=true
-      - --certificatesresolvers.myresolver.acme.email=seu-email@exemplo.com
-      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"                                     # Traefik dashboard
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./letsencrypt:/letsencrypt                       # armazena os certificados
-    networks:
-      - web
-
   ganjadao-app:
     build:
       context: .
@@ -44,7 +22,8 @@ services:
       # expõe a porta interna do Node
       - "traefik.http.services.ganjadao.loadbalancer.server.port=3000"
     networks:
-      - web
+      - dao_default
+      - traefik
 
 volumes:
   letesencrypt: {}  # onde o Traefik guarda os certificados
