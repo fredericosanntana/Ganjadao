@@ -1,0 +1,17 @@
+services:
+  ganjadao-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ganjadao:latest
+    container_name: ganjadao-app
+    restart: always
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    volumes:
+      - ganjadao-logs:/app/logs
+
+volumes:
+  ganjadao-logs:
