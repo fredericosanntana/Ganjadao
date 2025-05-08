@@ -1,4 +1,4 @@
-sservices:
+services:
   ganjadao-app:
     build:
       context: .
