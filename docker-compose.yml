@@ -9,7 +9,13 @@ services:
       - NODE_ENV=production
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ganjadao.rule=Host(`ganjadao.app`)"
+      # HTTP → HTTPS
+      - "traefik.http.routers.ganjadao-http.rule=Host(`ganjadao.dpo2u.com`)"
+      - "traefik.http.routers.ganjadao-http.entrypoints=web"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.ganjadao-http.middlewares=redirect-to-https"
+      # HTTPS
+      - "traefik.http.routers.ganjadao.rule=Host(`ganjadao.dpo2u.com`)"
       - "traefik.http.routers.ganjadao.entrypoints=websecure"
       - "traefik.http.routers.ganjadao.tls.certresolver=myresolver"
       - "traefik.http.services.ganjadao.loadbalancer.server.port=3000"
