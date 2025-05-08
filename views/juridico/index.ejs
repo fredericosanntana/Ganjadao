@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo Jurídico - Apoio ao Autocultivo de Cannabis</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/integration.css">
+    <style>
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .module-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .module-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .module-card h2 .icon {
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .module-card p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .module-card .btn {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .stats-section {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-card {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .workflow-section {
+            margin: 2rem 0;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 0 0.5rem;
+        }
+        
+        .step-number {
+            width: 4rem;
+            height: 4rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <section class="hero">
+            <h1>🌿 Módulo Jurídico - Proteção e Legalidade</h1>
+            <p class="lead">Ferramentas jurídicas para apoiar o autocultivo de cannabis de forma segura e legal.</p>
+        </section>
+        
+        <section class="module-nav">
+            <div class="module-card">
+                <h2><span class="icon">📜</span> Habeas Corpus Preventivo</h2>
+                <p>Gere seu próprio Habeas Corpus Preventivo com fundamentos jurídicos pré-integrados e campos personalizáveis.</p>
+                <a href="/juridico/habeas-corpus" class="btn btn-primary">Acessar Gerador</a>
+            </div>
+            
+            <div class="module-card">
+                <h2><span class="icon">📄</span> Central de Documentos</h2>
+                <p>Acesse modelos de documentos essenciais, faça upload de documentos pessoais e gere QR Codes para processos.</p>
+                <a href="/juridico/documentos" class="btn btn-primary">Acessar Documentos</a>
+            </div>
+            
+            <div class="module-card">
+                <h2><span class="icon">⚖️</span> Base de Jurisprudência</h2>
+                <p>Consulte decisões judiciais relacionadas ao autocultivo de cannabis por estado, quantidade de plantas e tipo de uso.</p>
+                <a href="/juridico/jurisprudencia" class="btn btn-primary">Consultar Jurisprudência</a>
+            </div>
+        </section>
+        
+        <section class="stats-section">
+            <h2>Estatísticas de Jurisprudência</h2>
+            <p>Dados baseados em decisões judiciais reais sobre autocultivo de cannabis no Brasil.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Taxa de Sucesso</h3>
+                    <div class="stat-value">70%</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Decisões Favoráveis</h3>
+                    <div class="stat-value">7</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Estados com Jurisprudência</h3>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Uso Medicinal</h3>
+                    <div class="stat-value">80%</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="workflow-section">
+            <h2>Fluxo de Trabalho Recomendado</h2>
+            <p>Siga estas etapas para maximizar sua proteção jurídica no autocultivo de cannabis.</p>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Consultar Jurisprudência</div>
+                    <div class="step-desc">Verifique decisões judiciais em seu estado para entender o cenário legal.</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Preparar Documentos</div>
+                    <div class="step-desc">Gere os documentos necessários para comprovar o uso pessoal e responsável.</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Gerar Habeas Corpus</div>
+                    <div class="step-desc">Crie seu Habeas Corpus Preventivo com base nos fundamentos jurídicos adequados.</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Protocolar</div>
+                    <div class="step-desc">Submeta o Habeas Corpus ao tribunal competente e mantenha cópias dos documentos.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

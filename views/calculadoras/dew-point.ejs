@@ -1,0 +1,468 @@
+<%- include('../partials/header') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<div class="container">
+  <h1 class="mt-4 mb-3">Calculadora de Ponto de Orvalho (Secagem e Cura)</h1>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Parâmetros</h5>
+        </div>
+        <div class="card-body">
+          <form id="dew-point-form">
+            <div class="form-group mb-3">
+              <label for="temperature">Temperatura Ambiente (°C)</label>
+              <input type="range" class="form-range" id="temperature" min="10" max="30" step="0.5" value="18">
+              <div class="d-flex justify-content-between">
+                <span>10°C</span>
+                <span id="temperature-value">18°C</span>
+                <span>30°C</span>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="humidity">Umidade Relativa (%)</label>
+              <input type="range" class="form-range" id="humidity" min="30" max="80" step="1" value="60">
+              <div class="d-flex justify-content-between">
+                <span>30%</span>
+                <span id="humidity-value">60%</span>
+                <span>80%</span>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="drying-phase">Fase</label>
+              <select class="form-select" id="drying-phase">
+                <option value="secagemInicial">Secagem Inicial</option>
+                <option value="secagemMedia">Secagem Média</option>
+                <option value="cura">Cura</option>
+              </select>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="material-density">Densidade do Material</label>
+              <select class="form-select" id="material-density">
+                <option value="solto">Solto (flores pequenas)</option>
+                <option value="medio" selected>Médio (flores médias)</option>
+                <option value="denso">Denso (flores grandes/densas)</option>
+              </select>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="airflow">Circulação de Ar</label>
+              <select class="form-select" id="airflow">
+                <option value="baixa">Baixa (ambiente fechado)</option>
+                <option value="media" selected>Média (ventilação suave)</option>
+                <option value="alta">Alta (ventilador direto)</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Cronograma Recomendado</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Fase</th>
+                  <th>Dias</th>
+                  <th>Temp.</th>
+                  <th>Umid.</th>
+                </tr>
+              </thead>
+              <tbody id="schedule-table">
+                <!-- Preenchido via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+          <div class="calculator-chart-container">
+            <div class="chart-wrapper">
+              <canvas id="schedule-chart"></canvas> <!-- ou ecChart -->
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Resultado</h5>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="text-center mb-3">
+                <h6>Ponto de Orvalho</h6>
+                <h2 id="dew-point-value">10.5°C</h2>
+                <p class="text-muted small">Temperatura na qual ocorre condensação</p>
+                
+                <h6 class="mt-3">Risco de Mofo</h6>
+                <div id="mold-risk-indicator" class="alert alert-success">
+                  <strong>Baixo</strong>
+                </div>
+                
+                <h6 class="mt-3">Taxa de Secagem</h6>
+                <p id="drying-rate">~10% de umidade por dia</p>
+                <p id="drying-time" class="text-muted small">Tempo estimado: 10 dias</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="recommendations" class="alert alert-info">
+                <strong>Condições ideais para esta fase</strong>
+              </div>
+              <div id="recommendation-list">
+                <h6>Recomendações:</h6>
+                <ul id="action-list">
+                  <li>Mantenha as condições atuais</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Gráfico de Risco de Mofo</h5>
+        </div>
+        <div class="card-body">
+          <div class="calculator-chart-container">
+            <div class="chart-wrapper">
+              <canvas id="mold-risk-chart"></canvas> <!-- ou ecChart -->
+            </div>
+          </div>
+          <div class="mt-3 small text-muted">
+            <p>O gráfico mostra o ponto de orvalho para diferentes combinações de temperatura e umidade. 
+            As linhas tracejadas representam os limites de risco de mofo. Quando o ponto de orvalho está 
+            acima da linha vermelha, o risco é alto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Sobre Secagem e Cura</h5>
+        </div>
+        <div class="card-body">
+          <p>A secagem e cura adequadas são etapas cruciais no processo de cultivo de cannabis, afetando diretamente a qualidade, sabor, aroma e potência do produto final.</p>
+          
+          <div class="row">
+            <div class="col-md-4">
+              <h6>Secagem Inicial (3-5 dias)</h6>
+              <ul>
+                <li>Remoção da maior parte da umidade</li>
+                <li>Temperatura: 15-21°C</li>
+                <li>Umidade: 45-60%</li>
+                <li>Boa circulação de ar é essencial</li>
+                <li>Evitar luz direta e calor excessivo</li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h6>Secagem Média (4-8 dias)</h6>
+              <ul>
+                <li>Secagem mais lenta e controlada</li>
+                <li>Temperatura: 15-21°C</li>
+                <li>Umidade: 50-65%</li>
+                <li>Circulação de ar moderada</li>
+                <li>Preserva terpenos e canabinoides</li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h6>Cura (2-8 semanas ou mais)</h6>
+              <ul>
+                <li>Armazenamento em recipientes herméticos</li>
+                <li>Temperatura: 15-21°C</li>
+                <li>Umidade: 58-65%</li>
+                <li>Abertura diária para troca de ar</li>
+                <li>Melhora sabor, aroma e suavidade</li>
+              </ul>
+            </div>
+          </div>
+          
+          <h6 class="mt-3">Ponto de Orvalho e Risco de Mofo</h6>
+          <p>O <strong>ponto de orvalho</strong> é a temperatura na qual o ar fica saturado e a umidade começa a condensar em superfícies. Quando a temperatura da planta se aproxima do ponto de orvalho, o risco de mofo aumenta significativamente.</p>
+          
+          <ul>
+            <li><strong>Risco Alto:</strong> Diferença entre temperatura ambiente e ponto de orvalho menor que 2°C</li>
+            <li><strong>Risco Médio:</strong> Diferença entre 2°C e 4°C</li>
+            <li><strong>Risco Baixo:</strong> Diferença maior que 4°C</li>
+          </ul>
+          
+          <p class="small text-muted mt-3">Nota: Esta calculadora fornece recomendações gerais. Ajuste as condições com base na observação direta do seu material vegetal e ambiente específico.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/dew-point-calculator.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do formulário
+    const temperatureInput = document.getElementById('temperature');
+    const temperatureValue = document.getElementById('temperature-value');
+    const humidityInput = document.getElementById('humidity');
+    const humidityValue = document.getElementById('humidity-value');
+    const phaseSelect = document.getElementById('drying-phase');
+    const densitySelect = document.getElementById('material-density');
+    const airflowSelect = document.getElementById('airflow');
+    
+    // Elementos de resultado
+    const dewPointValue = document.getElementById('dew-point-value');
+    const moldRiskIndicator = document.getElementById('mold-risk-indicator');
+    const dryingRate = document.getElementById('drying-rate');
+    const dryingTime = document.getElementById('drying-time');
+    const recommendations = document.getElementById('recommendations');
+    const actionList = document.getElementById('action-list');
+    const scheduleTable = document.getElementById('schedule-table');
+    
+    // Contextos dos gráficos
+    const moldRiskCtx = document.getElementById('mold-risk-chart').getContext('2d');
+    const scheduleCtx = document.getElementById('schedule-chart').getContext('2d');
+    let moldRiskChart, scheduleChart;
+    
+    // Inicializar gráficos
+    function initMoldRiskChart(data) {
+      if (moldRiskChart) {
+        moldRiskChart.destroy();
+      }
+      
+      moldRiskChart = new Chart(moldRiskCtx, {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Temperatura (°C)'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Ponto de Orvalho (°C)'
+              },
+              min: 0,
+              max: 30
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                title: function(tooltipItems) {
+                  return `Temperatura: ${tooltipItems[0].label}°C`;
+                }
+              }
+            },
+            legend: {
+              display: true,
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }
+    
+    function initScheduleChart(data) {
+      if (scheduleChart) {
+        scheduleChart.destroy();
+      }
+      
+      scheduleChart = new Chart(scheduleCtx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Fase'
+              }
+            },
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Dias'
+              },
+              min: 0,
+              max: 30
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: {
+                display: true,
+                text: 'Temperatura (°C) / Umidade (%)'
+              },
+              min: 0,
+              max: 100,
+              grid: {
+                drawOnChartArea: false
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }
+    
+    // Atualizar todos os cálculos e visualizações
+    function updateCalculations() {
+      const temperature = parseFloat(temperatureInput.value);
+      const humidity = parseFloat(humidityInput.value);
+      const phase = phaseSelect.value;
+      const density = densitySelect.value;
+      const airflow = airflowSelect.value;
+      
+      // Calcular ponto de orvalho
+      const dewPoint = calculateDewPoint(temperature, humidity);
+      
+      // Calcular risco de mofo
+      const moldRisk = calculateMoldRisk(temperature, dewPoint);
+      
+      // Estimar taxa de secagem
+      const dryingRateInfo = estimateDryingRate(temperature, humidity, density, airflow);
+      
+      // Gerar recomendações
+      const recommendationsInfo = generateRecommendations(
+        temperature, humidity, dewPoint, moldRisk, dryingRateInfo, phase, density, airflow
+      );
+      
+      // Gerar cronograma
+      const schedule = generateSchedule(density);
+      
+      // Atualizar exibição
+      dewPointValue.textContent = `${dewPoint.toFixed(1)}°C`;
+      
+      // Atualizar indicador de risco de mofo
+      moldRiskIndicator.className = 'alert';
+      switch (moldRisk) {
+        case 'baixo':
+          moldRiskIndicator.classList.add('alert-success');
+          moldRiskIndicator.innerHTML = '<strong>Baixo</strong>';
+          break;
+        case 'medio':
+          moldRiskIndicator.classList.add('alert-warning');
+          moldRiskIndicator.innerHTML = '<strong>Médio</strong>';
+          break;
+        case 'alto':
+          moldRiskIndicator.classList.add('alert-danger');
+          moldRiskIndicator.innerHTML = '<strong>Alto</strong>';
+          break;
+      }
+      
+      // Atualizar taxa de secagem
+      dryingRate.textContent = `~${dryingRateInfo.dailyRate.toFixed(1)}% de umidade por dia`;
+      dryingTime.textContent = `Tempo estimado: ${dryingRateInfo.estimatedDays.toFixed(1)} dias`;
+      
+      // Atualizar recomendações
+      recommendations.className = 'alert';
+      if (moldRisk === 'alto') {
+        recommendations.classList.add('alert-danger');
+      } else if (moldRisk === 'medio') {
+        recommendations.classList.add('alert-warning');
+      } else {
+        recommendations.classList.add('alert-info');
+      }
+      
+      recommendations.innerHTML = `<strong>${recommendationsInfo.status}</strong>`;
+      
+      // Limpar e adicionar ações recomendadas
+      actionList.innerHTML = '';
+      recommendationsInfo.actions.forEach(action => {
+        const li = document.createElement('li');
+        li.textContent = action;
+        actionList.appendChild(li);
+      });
+      
+      // Atualizar tabela de cronograma
+      scheduleTable.innerHTML = '';
+      
+      // Adicionar linha para secagem inicial
+      let row = document.createElement('tr');
+      row.innerHTML = `
+        <td>Secagem Inicial</td>
+        <td>${schedule.secagemInicial.dias}</td>
+        <td>${schedule.secagemInicial.temperatura}</td>
+        <td>${schedule.secagemInicial.umidade}</td>
+      `;
+      scheduleTable.appendChild(row);
+      
+      // Adicionar linha para secagem média
+      row = document.createElement('tr');
+      row.innerHTML = `
+        <td>Secagem Média</td>
+        <td>${schedule.secagemMedia.dias}</td>
+        <td>${schedule.secagemMedia.temperatura}</td>
+        <td>${schedule.secagemMedia.umidade}</td>
+      `;
+      scheduleTable.appendChild(row);
+      
+      // Adicionar linha para cura
+      row = document.createElement('tr');
+      row.innerHTML = `
+        <td>Cura</td>
+        <td>${schedule.cura.dias}</td>
+        <td>${schedule.cura.temperatura}</td>
+        <td>${schedule.cura.umidade}</td>
+      `;
+      scheduleTable.appendChild(row);
+      
+      // Atualizar gráficos
+      const moldRiskData = generateMoldRiskData(temperature, humidity);
+      initMoldRiskChart(moldRiskData);
+      
+      const scheduleChartData = generateScheduleChartData(schedule);
+      initScheduleChart(scheduleChartData);
+    }
+    
+    // Event listeners
+    temperatureInput.addEventListener('input', function() {
+      temperatureValue.textContent = `${this.value}°C`;
+      updateCalculations();
+    });
+    
+    humidityInput.addEventListener('input', function() {
+      humidityValue.textContent = `${this.value}%`;
+      updateCalculations();
+    });
+    
+    phaseSelect.addEventListener('change', updateCalculations);
+    densitySelect.addEventListener('change', updateCalculations);
+    airflowSelect.addEventListener('change', updateCalculations);
+    
+    // Inicialização
+    updateCalculations();
+  });
+</script>
+
+<%- include('../partials/footer') %>

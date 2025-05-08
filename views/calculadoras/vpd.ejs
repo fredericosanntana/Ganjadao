@@ -1,0 +1,306 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<%- include('../partials/header') %>
+
+<div class="container">
+  <h1 class="mt-4 mb-3">Calculadora VPD (Vapor Pressure Deficit)</h1>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Parâmetros</h5>
+        </div>
+        <div class="card-body">
+          <form id="vpd-form">
+            <div class="form-group mb-3">
+              <label for="temperature">Temperatura Ambiente (°C)</label>
+              <input type="range" class="form-range" id="temperature" min="15" max="35" step="0.5" value="25">
+              <div class="d-flex justify-content-between">
+                <span>15°C</span>
+                <span id="temperature-value">25°C</span>
+                <span>35°C</span>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="humidity">Umidade Relativa (%)</label>
+              <input type="range" class="form-range" id="humidity" min="20" max="90" step="1" value="60">
+              <div class="d-flex justify-content-between">
+                <span>20%</span>
+                <span id="humidity-value">60%</span>
+                <span>90%</span>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="leaf-temperature">Temperatura da Folha (°C)</label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="leaf-temperature" min="10" max="35" step="0.1" placeholder="Auto">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" id="reset-leaf-temp">Auto</button>
+                </div>
+              </div>
+              <small class="form-text text-muted">Deixe em branco para estimativa automática</small>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="growth-stage">Estágio de Crescimento</label>
+              <select class="form-select" id="growth-stage">
+                <option value="vegetativo">Vegetativo</option>
+                <option value="floracaoInicial">Floração Inicial</option>
+                <option value="floracaoTardia">Floração Tardia</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Resultado VPD</h5>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="text-center mb-3">
+                <h2 id="vpd-value">1.2 kPa</h2>
+                <div class="vpd-indicator">
+                  <div class="progress" style="height: 30px;">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Muito Úmido</div>
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Baixo</div>
+                    <div class="progress-bar bg-success" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Ótimo</div>
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Alto</div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Muito Seco</div>
+                  </div>
+                  <div id="vpd-marker" style="position: relative; top: -15px; left: 50%; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid black;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="vpd-status" class="alert alert-success">
+                <strong>VPD ótimo</strong> - Condições ideais para este estágio
+              </div>
+              <div id="vpd-recommendations">
+                <h6>Recomendações:</h6>
+                <ul id="recommendation-list">
+                  <li>Mantenha as condições atuais</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Gráfico VPD</h5>
+        </div>
+        <div class="card-body">
+          <div class="calculator-chart-container">
+            <div class="chart-wrapper">
+              <canvas id="vpd-chart"></canvas>
+            </div>
+          </div>
+          
+          <div class="mt-3 small text-muted">
+            <p>O gráfico mostra o VPD para diferentes combinações de temperatura e umidade. 
+            A área entre as linhas tracejadas verdes representa a faixa ideal para o estágio selecionado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Sobre VPD</h5>
+        </div>
+        <div class="card-body">
+          <p>O <strong>Déficit de Pressão de Vapor (VPD)</strong> é a diferença entre a quantidade de umidade no ar e quanto umidade o ar poderia potencialmente conter quando saturado. É uma medida importante para cultivadores de cannabis, pois afeta diretamente a taxa de transpiração das plantas.</p>
+          
+          <p>Um VPD ideal:</p>
+          <ul>
+            <li>Promove transpiração saudável e absorção de nutrientes</li>
+            <li>Reduz o risco de doenças fúngicas e mofo</li>
+            <li>Otimiza o crescimento e desenvolvimento da planta</li>
+            <li>Varia de acordo com o estágio de crescimento da planta</li>
+          </ul>
+          
+          <p>Valores de referência:</p>
+          <ul>
+            <li><strong>Vegetativo:</strong> 0.8 - 1.2 kPa</li>
+            <li><strong>Floração Inicial:</strong> 1.0 - 1.4 kPa</li>
+            <li><strong>Floração Tardia:</strong> 1.2 - 1.6 kPa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/vpd-calculator.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do formulário
+    const temperatureInput = document.getElementById('temperature');
+    const temperatureValue = document.getElementById('temperature-value');
+    const humidityInput = document.getElementById('humidity');
+    const humidityValue = document.getElementById('humidity-value');
+    const leafTemperatureInput = document.getElementById('leaf-temperature');
+    const resetLeafTempBtn = document.getElementById('reset-leaf-temp');
+    const growthStageSelect = document.getElementById('growth-stage');
+    
+    // Elementos de resultado
+    const vpdValueElement = document.getElementById('vpd-value');
+    const vpdMarker = document.getElementById('vpd-marker');
+    const vpdStatus = document.getElementById('vpd-status');
+    const recommendationList = document.getElementById('recommendation-list');
+    
+    // Contexto do gráfico
+    const ctx = document.getElementById('vpd-chart').getContext('2d');
+    let vpdChart;
+    
+    // Inicializar gráfico
+    function initChart(stage) {
+      const chartData = generateChartData(stage);
+      
+      if (vpdChart) {
+        vpdChart.destroy();
+      }
+      
+      vpdChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Temperatura (°C)'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'VPD (kPa)'
+              },
+              min: 0,
+              max: 3
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                title: function(tooltipItems) {
+                  return `Temperatura: ${tooltipItems[0].label}°C`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    // Atualizar o VPD e recomendações
+    function updateVPD() {
+      const temperature = parseFloat(temperatureInput.value);
+      const humidity = parseFloat(humidityInput.value);
+      const stage = growthStageSelect.value;
+      
+      let leafTemperature;
+      if (leafTemperatureInput.value === '') {
+        leafTemperature = estimateLeafTemperature(temperature);
+      } else {
+        leafTemperature = parseFloat(leafTemperatureInput.value);
+      }
+      
+      // Calcular VPD
+      const vpd = calculateVPD(leafTemperature, temperature, humidity);
+      const zone = getVPDZone(vpd, stage);
+      const recommendations = generateRecommendations(vpd, zone, temperature, humidity, stage);
+      
+      // Atualizar exibição
+      vpdValueElement.textContent = `${vpd.toFixed(2)} kPa`;
+      
+      // Atualizar marcador na barra de progresso
+      const totalWidth = document.querySelector('.vpd-indicator .progress').offsetWidth;
+      let position;
+      
+      const range = VPD_RANGES[stage];
+      const minVpd = 0;
+      const maxVpd = 3;
+      const rangeWidth = maxVpd - minVpd;
+      
+      position = (vpd - minVpd) / rangeWidth * totalWidth;
+      vpdMarker.style.left = `${position}px`;
+      
+      // Atualizar status e recomendações
+      vpdStatus.className = 'alert';
+      switch (zone) {
+        case 'tooLow':
+          vpdStatus.classList.add('alert-info');
+          break;
+        case 'low':
+          vpdStatus.classList.add('alert-success');
+          break;
+        case 'optimal':
+          vpdStatus.classList.add('alert-success');
+          break;
+        case 'high':
+          vpdStatus.classList.add('alert-warning');
+          break;
+        case 'tooHigh':
+          vpdStatus.classList.add('alert-danger');
+          break;
+      }
+      
+      vpdStatus.innerHTML = `<strong>${recommendations.status}</strong>`;
+      
+      // Limpar e adicionar recomendações
+      recommendationList.innerHTML = '';
+      recommendations.actions.forEach(action => {
+        const li = document.createElement('li');
+        li.textContent = action;
+        recommendationList.appendChild(li);
+      });
+    }
+    
+    // Event listeners
+    temperatureInput.addEventListener('input', function() {
+      temperatureValue.textContent = `${this.value}°C`;
+      updateVPD();
+    });
+    
+    humidityInput.addEventListener('input', function() {
+      humidityValue.textContent = `${this.value}%`;
+      updateVPD();
+    });
+    
+    leafTemperatureInput.addEventListener('input', updateVPD);
+    
+    resetLeafTempBtn.addEventListener('click', function() {
+      leafTemperatureInput.value = '';
+      updateVPD();
+    });
+    
+    growthStageSelect.addEventListener('change', function() {
+      initChart(this.value);
+      updateVPD();
+    });
+    
+    // Inicialização
+    initChart(growthStageSelect.value);
+    updateVPD();
+  });
+</script>
+
+<%- include('../partials/footer') %>

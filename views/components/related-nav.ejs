@@ -1,0 +1,29 @@
+<!-- Componente de navegação relacionada -->
+<div class="related-nav">
+    <h3>Funcionalidades Relacionadas</h3>
+    <div class="related-cards">
+        <% if (currentPage !== 'habeas-corpus') { %>
+        <div class="related-card">
+            <h4>Habeas Corpus Preventivo</h4>
+            <p>Gere seu próprio Habeas Corpus com fundamentos jurídicos personalizados.</p>
+            <a href="/juridico/habeas-corpus" class="btn btn-outline">Acessar</a>
+        </div>
+        <% } %>
+        
+        <% if (currentPage !== 'documentos') { %>
+        <div class="related-card">
+            <h4>Central de Documentos</h4>
+            <p>Acesse modelos de documentos essenciais e gere QR Codes para processos.</p>
+            <a href="/juridico/documentos" class="btn btn-outline">Acessar</a>
+        </div>
+        <% } %>
+        
+        <% if (currentPage !== 'jurisprudencia') { %>
+        <div class="related-card">
+            <h4>Base de Jurisprudência</h4>
+            <p>Consulte decisões judiciais relacionadas ao autocultivo de cannabis.</p>
+            <a href="/juridico/jurisprudencia" class="btn btn-outline">Acessar</a>
+        </div>
+        <% } %>
+    </div>
+</div>

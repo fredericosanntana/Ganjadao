@@ -1,0 +1,89 @@
+<%- include('../partials/header', { title: 'Calculadoras Técnicas para Cultivo' }) %>
+
+
+<main class="container">
+  <section class="page-content-section">
+    <h1>Calculadoras Técnicas para Cultivo</h1>
+    
+    <div class="info-box" style="background-color: #e7f3ff; border-left: 5px solid #007bff; padding: 15px; margin-bottom: 2rem; border-radius: var(--border-radius);">
+      <p style="margin:0; color: #004085;">Bem-vindo ao módulo de calculadoras técnicas para cultivo de cannabis. Estas ferramentas ajudarão você a otimizar seu cultivo com cálculos precisos para cada fase do processo.</p>
+    </div>
+    
+    <div class="features-grid"> 
+      <div class="feature-card">
+        <div class="icon">🎛️</div>
+        <h3>Calculadora VPD</h3>
+        <p>Calcule o Déficit de Pressão de Vapor ideal para diferentes estágios de crescimento, otimizando as condições ambientais para maximizar o desenvolvimento da planta.</p>
+        <ul style="font-size: 0.9em; color: #555; padding-left: 20px; margin-bottom:1.5rem;">
+          <li>Recomendações específicas por estágio</li>
+          <li>Visualização gráfica das zonas ideais</li>
+          <li>Sugestões para ajustes de temperatura e umidade</li>
+        </ul>
+        <a href="/calculadoras/vpd" class="btn btn-primary">Acessar Calculadora</a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="icon">💡</div>
+        <h3>Calculadora DLI</h3>
+        <p>Determine a quantidade total de luz fotossinteticamente ativa (PAR) recebida pelas plantas durante um período de 24 horas, essencial para otimizar o crescimento.</p>
+        <ul style="font-size: 0.9em; color: #555; padding-left: 20px; margin-bottom:1.5rem;">
+          <li>Conversão entre diferentes tipos de luz</li>
+          <li>Ajustes baseados na distância</li>
+          <li>Estimativa de consumo de energia</li>
+        </ul>
+        <a href="/calculadoras/dli" class="btn btn-primary">Acessar Calculadora</a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="icon">🧪</div>
+        <h3>Calculadora de Nutrientes</h3>
+        <p>Determine as proporções ideais de macro e micronutrientes para cada fase do cultivo, evitando deficiências ou toxicidades.</p>
+        <ul style="font-size: 0.9em; color: #555; padding-left: 20px; margin-bottom:1.5rem;">
+          <li>Cálculo de EC/PPM alvo</li>
+          <li>Cronograma de alimentação semanal</li>
+          <li>Identificador de deficiências</li>
+        </ul>
+        <a href="/calculadoras/nutrientes" class="btn btn-primary">Acessar Calculadora</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">💧</div>
+        <h3>Calculadora de Ponto de Orvalho</h3>
+        <p>Determine as condições ideais para secagem e cura, evitando mofo e degradação, enquanto preserva terpenos e canabinoides.</p>
+        <ul style="font-size: 0.9em; color: #555; padding-left: 20px; margin-bottom:1.5rem;">
+          <li>Cálculo de risco de mofo</li>
+          <li>Taxa de secagem estimada</li>
+          <li>Cronograma recomendado para cada fase</li>
+        </ul>
+        <a href="/calculadoras/dew-point" class="btn btn-primary">Acessar Calculadora</a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="icon">🚿</div>
+        <h3>Calculadora EC Flush</h3>
+        <p>Determine quando e como realizar o flush (lavagem) do substrato para remover excesso de sais e nutrientes antes da colheita.</p>
+        <ul style="font-size: 0.9em; color: #555; padding-left: 20px; margin-bottom:1.5rem;">
+          <li>Volume de água necessário</li>
+          <li>Cronograma de redução gradual de EC</li>
+          <li>Instruções específicas para cada substrato</li>
+        </ul>
+        <a href="/calculadoras/ec-flush" class="btn btn-primary">Acessar Calculadora</a>
+      </div>
+
+      <div class="feature-card" style="grid-column: 1 / -1;"> <%- /* Ocupa toda a largura da grid */ %>
+        <h3>Sobre as Calculadoras Técnicas</h3>
+        <p>Nossas calculadoras técnicas foram desenvolvidas com base em pesquisas científicas e experiência prática de cultivadores. Elas fornecem recomendações precisas para otimizar cada aspecto do seu cultivo de cannabis.</p>
+        <p><strong>Benefícios de usar nossas calculadoras:</strong></p>
+        <ul style="font-size: 0.9em; color: #555; padding-left: 20px; margin-bottom:1.0rem;">
+          <li><strong>Precisão:</strong> Cálculos baseados em fórmulas científicas comprovadas</li>
+          <li><strong>Personalização:</strong> Ajustes específicos para diferentes estágios de crescimento e condições</li>
+          <li><strong>Visualização:</strong> Gráficos intuitivos para melhor compreensão dos dados</li>
+          <li><strong>Recomendações:</strong> Sugestões práticas para melhorar seu cultivo</li>
+        </ul>
+        <p><em>Todas as calculadoras funcionam offline após o carregamento inicial, garantindo que você possa usá-las mesmo em áreas de cultivo sem acesso à internet.</em></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

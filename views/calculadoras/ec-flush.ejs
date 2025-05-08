@@ -1,0 +1,397 @@
+<%- include('../partials/header') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<div class="container">
+  <h1 class="mt-4 mb-3">Calculadora EC Flush</h1>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Parâmetros</h5>
+        </div>
+        <div class="card-body">
+          <form id="ec-flush-form">
+            <div class="form-group mb-3">
+              <label for="current-ec">EC/PPM Atual do Substrato/Runoff</label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="current-ec" min="0.1" max="5.0" step="0.1" value="2.0">
+                <select class="form-select" id="ec-unit" style="max-width: 120px;">
+                  <option value="ec">EC (mS/cm)</option>
+                  <option value="ppm500">PPM 500</option>
+                  <option value="ppm700">PPM 700</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="water-ec">EC/PPM da Água de Entrada</label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="water-ec" min="0" max="1.0" step="0.1" value="0.2">
+                <span class="input-group-text">mS/cm</span>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="pot-size">Volume do Vaso/Sistema (L)</label>
+              <input type="number" class="form-control" id="pot-size" min="1" max="100" step="1" value="10">
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="substrate-type">Tipo de Substrato</label>
+              <select class="form-select" id="substrate-type">
+                <option value="solo">Solo</option>
+                <option value="coco">Coco</option>
+                <option value="hidroponia">Hidroponia</option>
+              </select>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="days-remaining">Dias Restantes até a Colheita</label>
+              <input type="number" class="form-control" id="days-remaining" min="1" max="60" step="1" value="14">
+            </div>
+            
+            <button type="button" id="calculate-btn" class="btn btn-primary">Calcular Flush</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Resultado</h5>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="text-center mb-3">
+                <h6>Volume de Água por Flush</h6>
+                <h2 id="water-volume-value">30 L</h2>
+                
+                <h6 class="mt-3">Número de Flushes</h6>
+                <h2 id="flush-count-value">3</h2>
+                
+                <h6 class="mt-3">Volume Total</h6>
+                <p id="total-volume-value">90 L</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div id="recommendations" class="alert alert-info">
+                <strong>Cronograma de flush recomendado</strong>
+              </div>
+              <div id="recommendation-list">
+                <h6>Recomendações:</h6>
+                <ul id="action-list">
+                  <li>Realize 3 flushes nos próximos 14 dias</li>
+                  <li>Monitore a EC do runoff após cada flush</li>
+                  <li>Mantenha a temperatura e umidade adequadas</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5>Cronograma de Redução de EC</h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <canvas id="ec-reduction-chart"></canvas> <!-- ou ecChart -->
+              </div>
+            </div>
+              <div class="table-responsive mt-3">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Dia</th>
+                      <th>EC Alvo</th>
+                      <th>Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody id="schedule-table">
+                    <!-- Preenchido via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5>Eficiência de Flush</h5>
+            </div>
+            <div class="card-body">
+              <div class="calculator-chart-container">
+                <div class="chart-wrapper">
+                  <canvas id="flush-efficiency-chart"></canvas> <!-- ou ecChart -->
+                </div>
+              </div>
+              
+              <div class="mt-3 small text-muted">
+                <p>O gráfico mostra a redução projetada de EC após cada flush. A linha vermelha representa a EC alvo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Instruções Específicas para <span id="substrate-name">Solo</span></h5>
+        </div>
+        <div class="card-body">
+          <ol id="substrate-instructions">
+            <!-- Preenchido via JavaScript -->
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Sobre Flush</h5>
+        </div>
+        <div class="card-body">
+          <p>O <strong>flush</strong> é o processo de lavar o substrato com água para remover o excesso de sais e nutrientes acumulados antes da colheita. Este processo é importante para melhorar o sabor, aroma e suavidade do produto final.</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Por que fazer flush?</h6>
+              <ul>
+                <li>Remove excesso de nutrientes que podem afetar o sabor</li>
+                <li>Força a planta a utilizar suas reservas de nutrientes</li>
+                <li>Pode melhorar a expressão de terpenos e canabinoides</li>
+                <li>Reduz a aspereza da fumaça no produto final</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>Quando fazer flush?</h6>
+              <ul>
+                <li><strong>Solo:</strong> 1-2 semanas antes da colheita</li>
+                <li><strong>Coco:</strong> 7-10 dias antes da colheita</li>
+                <li><strong>Hidroponia:</strong> 5-7 dias antes da colheita</li>
+                <li>Também recomendado durante o cultivo para corrigir excesso de nutrientes</li>
+              </ul>
+            </div>
+          </div>
+          
+          <h6 class="mt-3">Monitoramento do Flush</h6>
+          <p>O progresso do flush é monitorado medindo a EC (condutividade elétrica) da água que drena do substrato (runoff). A EC é uma medida da concentração de sais dissolvidos na água.</p>
+          
+          <ul>
+            <li><strong>EC Inicial:</strong> Geralmente entre 1.5-2.5 mS/cm durante a floração</li>
+            <li><strong>EC Alvo:</strong> Idealmente abaixo de 0.4 mS/cm após o flush completo</li>
+            <li><strong>Eficiência:</strong> Cada flush remove aproximadamente 50-70% dos sais restantes, dependendo do substrato</li>
+          </ul>
+          
+          <p class="small text-muted mt-3">Nota: Esta calculadora fornece recomendações gerais. Ajuste o processo com base na observação direta das suas plantas e nas características específicas do seu cultivo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/ec-flush-calculator.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do formulário
+    const currentECInput = document.getElementById('current-ec');
+    const ecUnitSelect = document.getElementById('ec-unit');
+    const waterECInput = document.getElementById('water-ec');
+    const potSizeInput = document.getElementById('pot-size');
+    const substrateTypeSelect = document.getElementById('substrate-type');
+    const daysRemainingInput = document.getElementById('days-remaining');
+    const calculateBtn = document.getElementById('calculate-btn');
+    
+    // Elementos de resultado
+    const waterVolumeValue = document.getElementById('water-volume-value');
+    const flushCountValue = document.getElementById('flush-count-value');
+    const totalVolumeValue = document.getElementById('total-volume-value');
+    const recommendations = document.getElementById('recommendations');
+    const actionList = document.getElementById('action-list');
+    const scheduleTable = document.getElementById('schedule-table');
+    const substrateName = document.getElementById('substrate-name');
+    const substrateInstructions = document.getElementById('substrate-instructions');
+    
+    // Contextos dos gráficos
+    const ecReductionCtx = document.getElementById('ec-reduction-chart').getContext('2d');
+    const flushEfficiencyCtx = document.getElementById('flush-efficiency-chart').getContext('2d');
+    let ecReductionChart, flushEfficiencyChart;
+    
+    // Inicializar gráficos
+    function initECReductionChart(data) {
+      if (ecReductionChart) {
+        ecReductionChart.destroy();
+      }
+      
+      ecReductionChart = new Chart(ecReductionCtx, {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: 'EC (mS/cm)'
+              },
+              min: 0
+            }
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }
+    
+    function initFlushEfficiencyChart(data) {
+      if (flushEfficiencyChart) {
+        flushEfficiencyChart.destroy();
+      }
+      
+      flushEfficiencyChart = new Chart(flushEfficiencyCtx, {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: 'EC (mS/cm)'
+              },
+              min: 0
+            }
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }
+    
+    // Converter EC/PPM
+    function convertToEC(value, unit) {
+      if (unit === 'ec') return value;
+      if (unit === 'ppm500') return value / 500;
+      if (unit === 'ppm700') return value / 700;
+      return value;
+    }
+    
+    // Calcular flush
+    function calculateFlush() {
+      // Obter valores do formulário
+      const currentECValue = parseFloat(currentECInput.value);
+      const ecUnit = ecUnitSelect.value;
+      const waterEC = parseFloat(waterECInput.value);
+      const potSize = parseFloat(potSizeInput.value);
+      const substrate = substrateTypeSelect.value;
+      const daysRemaining = parseInt(daysRemainingInput.value);
+      
+      // Converter para EC se necessário
+      const currentEC = convertToEC(currentECValue, ecUnit);
+      
+      // Calcular volume de água por flush
+      const waterVolume = calculateWaterVolume(potSize, substrate);
+      
+      // Calcular número de flushes
+      const flushCount = calculateNumberOfFlushes(currentEC, TARGET_FLUSH_EC, substrate);
+      
+      // Calcular volume total
+      const totalVolume = waterVolume * flushCount;
+      
+      // Gerar cronograma
+      const schedule = generateECReductionSchedule(currentEC, TARGET_FLUSH_EC, daysRemaining, flushCount);
+      
+      // Gerar recomendações
+      const recommendationsInfo = generateFlushRecommendations(currentEC, waterEC, daysRemaining, flushCount);
+      
+      // Gerar instruções específicas para o substrato
+      const instructions = generateSubstrateInstructions(substrate, waterVolume, flushCount);
+      
+      // Atualizar interface
+      updateResults(waterVolume, flushCount, totalVolume, schedule, recommendationsInfo, substrate, instructions, currentEC);
+    }
+    
+    // Atualizar resultados na interface
+    function updateResults(waterVolume, flushCount, totalVolume, schedule, recommendationsInfo, substrate, instructions, currentEC) {
+      // Atualizar valores
+      waterVolumeValue.textContent = `${waterVolume.toFixed(1)} L`;
+      flushCountValue.textContent = flushCount;
+      totalVolumeValue.textContent = `${totalVolume.toFixed(1)} L`;
+      
+      // Atualizar recomendações
+      recommendations.innerHTML = `<strong>${recommendationsInfo.status}</strong>`;
+      
+      // Limpar e adicionar ações recomendadas
+      actionList.innerHTML = '';
+      recommendationsInfo.actions.forEach(action => {
+        const li = document.createElement('li');
+        li.textContent = action;
+        actionList.appendChild(li);
+      });
+      
+      // Atualizar tabela de cronograma
+      scheduleTable.innerHTML = '';
+      schedule.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.day}</td>
+          <td>${item.ec} mS/cm</td>
+          <td>${item.action}</td>
+        `;
+        scheduleTable.appendChild(row);
+      });
+      
+      // Atualizar nome do substrato
+      substrateName.textContent = substrate.charAt(0).toUpperCase() + substrate.slice(1);
+      
+      // Limpar e adicionar instruções
+      substrateInstructions.innerHTML = '';
+      instructions.forEach(instruction => {
+        const li = document.createElement('li');
+        li.textContent = instruction;
+        substrateInstructions.appendChild(li);
+      });
+      
+      // Atualizar gráficos
+      const ecReductionData = generateECReductionChartData(schedule);
+      initECReductionChart(ecReductionData);
+      
+      const flushEfficiencyData = generateFlushEfficiencyChartData(substrate, currentEC, TARGET_FLUSH_EC);
+      initFlushEfficiencyChart(flushEfficiencyData);
+    }
+    
+    // Event listeners
+    calculateBtn.addEventListener('click', calculateFlush);
+    
+    // Inicialização
+    calculateFlush();
+  });
+</script>
+
+<%- include('../partials/footer') %>

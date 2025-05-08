@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <section class="documentos-section">
+            <h1>Central de Documentos</h1>
+            <p class="lead">Acesse modelos de documentos essenciais para o autocultivo legal.</p>
+            
+            <div class="documentos-grid">
+                <% documentos.forEach(function(documento) { %>
+                    <div class="documento-card">
+                        <h3><%= documento.nome %></h3>
+                        <div class="documento-actions">
+                            <a href="/juridico/documentos/<%= documento.id %>" class="btn btn-primary">Visualizar</a>
+                            <a href="/juridico/documentos/<%= documento.id %>?download=true" class="btn btn-secondary">Baixar</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+            
+            <div class="upload-section">
+                <h2>Upload de Documentos</h2>
+                <p>Faça upload de documentos pessoais e petições de forma segura.</p>
+                
+                <form action="/juridico/documentos/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+                    <div class="form-field">
+                        <label for="documento">Selecione o arquivo</label>
+                        <input type="file" id="documento" name="documento" required>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="tipo">Tipo de Documento</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="peticao">Petição</option>
+                            <option value="laudo">Laudo Médico</option>
+                            <option value="receita">Receita Médica</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" name="descricao" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Enviar Documento</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="qrcode-section">
+                <h2>QR Code para Documentos</h2>
+                <p>Gere um QR Code para exibição rápida do número do processo ou decisão.</p>
+                
+                <form action="/juridico/documentos/qrcode" method="GET" class="qrcode-form">
+                    <div class="form-field">
+                        <label for="processo">Número do Processo</label>
+                        <input type="text" id="processo" name="id" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Gerar QR Code</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

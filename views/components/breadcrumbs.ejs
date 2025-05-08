@@ -1,0 +1,17 @@
+<!-- Componente de breadcrumbs para navegação -->
+<div class="breadcrumbs">
+    <ul>
+        <li><a href="/">Início</a></li>
+        <% if (locals.breadcrumbs) { %>
+            <% breadcrumbs.forEach(function(crumb, index) { %>
+                <% if (index === breadcrumbs.length - 1) { %>
+                    <li><span class="current"><%= crumb.label %></span></li>
+                <% } else { %>
+                    <li><a href="<%= crumb.url %>"><%= crumb.label %></a></li>
+                <% } %>
+            <% }); %>
+        <% } else { %>
+            <li><span class="current"><%= title %></span></li>
+        <% } %>
+    </ul>
+</div>

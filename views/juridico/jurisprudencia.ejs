@@ -1,0 +1,138 @@
+<%- include('partials/header', { title }) %>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom Styles -->
+<link href="/css/style.css" rel="stylesheet">
+
+<main class="container page-section light-bg-alt py-5">
+  <section class="page-content-section mx-auto" style="max-width:900px;">
+    <h1 class="text-center mb-4">Base de Jurisprudência Interativa</h1>
+    <p class="lead text-center mb-5">Consulte decisões judiciais relacionadas ao autocultivo de cannabis por estado e outros filtros.</p>
+
+    <% if (estatisticas) { %>
+    <div class="mb-5">
+      <h2 class="h4 mb-3">Estatísticas Gerais</h2>
+      <div class="row g-3">
+        <div class="col-sm-6 col-md-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5>Total de Decisões</h5>
+              <p class="display-6 mb-0"><%= estatisticas.total %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="card text-center border-success">
+            <div class="card-body">
+              <h5 class="text-success">Deferidos</h5>
+              <p class="display-6 mb-1"><%= estatisticas.deferidos %></p>
+              <small><%= estatisticas.total>0 ? Math.round(estatisticas.deferidos/estatisticas.total*100) : 0 %>%</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="card text-center border-warning">
+            <div class="card-body">
+              <h5 class="text-warning">Parciais</h5>
+              <p class="display-6 mb-1"><%= estatisticas.parciais %></p>
+              <small><%= estatisticas.total>0 ? Math.round(estatisticas.parciais/estatisticas.total*100) : 0 %>%</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <div class="card text-center border-danger">
+            <div class="card-body">
+              <h5 class="text-danger">Indeferidos</h5>
+              <p class="display-6 mb-1"><%= estatisticas.indeferidos %></p>
+              <small><%= estatisticas.total>0 ? Math.round(estatisticas.indeferidos/estatisticas.total*100) : 0 %>%</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <h6>Taxa de Sucesso</h6>
+        <div class="progress" style="height:1.5rem;">
+          <div class="progress-bar bg-info" role="progressbar" style="width:<%= estatisticas.taxaSucesso %>%" aria-valuenow="<%= estatisticas.taxaSucesso %>" aria-valuemin="0" aria-valuemax="100">
+            <%= estatisticas.taxaSucesso %>%
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Filtros -->
+    <div class="mb-5">
+      <h2 class="h4 mb-3">Filtros</h2>
+      <form id="jurisprudenciaFilter" class="row g-3">
+        <div class="col-md-3">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" name="estado" class="form-select">
+            <option value="">Todos</option>
+            <% estados.forEach(e=>{ %><option><%= e %></option><% }) %>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="quantidadePlantas" class="form-label">Qtd. Plantas</label>
+          <select id="quantidadePlantas" name="quantidadePlantas" class="form-select">
+            <option value="">Qualquer</option>
+            <option value="1-3">1 a 3</option>
+            <option value="4-6">4 a 6</option>
+            <option value="7-10">7 a 10</option>
+            <option value="10+">Mais de 10</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="tipoUso" class="form-label">Tipo de Uso</label>
+          <select id="tipoUso" name="tipoUso" class="form-select">
+            <option value="">Todos</option>
+            <option value="medicinal">Medicinal</option>
+            <option value="terapeutico">Terapêutico</option>
+            <option value="pessoal">Uso Pessoal</option>
+            <option value="religioso">Religioso</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="resultado" class="form-label">Resultado</label>
+          <select id="resultado" name="resultado" class="form-select">
+            <option value="">Todos</option>
+            <option value="deferido">Deferido</option>
+            <option value="indeferido">Indeferido</option>
+            <option value="parcial">Parcial</option>
+          </select>
+        </div>
+        <div class="col-12 mt-3 border-top pt-3">
+          <h6>Fonte de Dados</h6>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="fonteLocal" checked>
+            <label class="form-check-label" for="fonteLocal">Base Local</label>
+          </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end gap-2">
+          <button type="reset" class="btn btn-outline-secondary">Limpar Filtros</button>
+          <button type="submit" class="btn btn-primary">Filtrar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Resultados -->
+    <div>
+      <h2 class="h4 mb-3">Resultados</h2>
+      <div id="jurisprudenciaResults" class="table-responsive">
+        <table class="table table-striped jurisprudencia-table mb-0">
+          <!-- carregado via JS -->
+        </table>
+        <p class="text-muted">Utilize os filtros acima para buscar decisões judiciais.</p>
+      </div>
+      <div id="paginacao" class="d-flex justify-content-center align-items-center gap-3 mt-4" style="display:none;">
+        <button id="paginaAnterior" class="btn btn-outline-secondary" disabled>Anterior</button>
+        <span id="infoPagina">Página 1 de 1</span>
+        <button id="proximaPagina" class="btn btn-outline-secondary" disabled>Próxima</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/jurisprudencia.js"></script>

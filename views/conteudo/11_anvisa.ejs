@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifestação ANVISA </title>
+    <link rel="stylesheet" href="/css/style.css"> <%-/* Adicionar o caminho correto para o CSS global */%>
+    <style>
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .module-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .module-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .module-card h2 .icon {
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .module-card p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .module-card .btn {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .stats-section {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-card {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .workflow-section {
+            margin: 2rem 0;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 0 0.5rem;
+        }
+        
+        .step-number {
+            width: 4rem;
+            height: 4rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .info-section {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .info-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .info-card {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+        }
+        
+        .info-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .info-card ul {
+            padding-left: 1.5rem;
+            color: #666;
+        }
+        
+        .info-card ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Formulário de manifestação */
+        .manifestation-form {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .manifestation-form h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .form-check-group {
+            margin-top: 1rem;
+        }
+        
+        .form-check {
+            margin-bottom: 0.5rem;
+        }
+        
+        .preview-section {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .preview-section h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .preview-content {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid #eee;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 0.2rem solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <section class="hero">
+            <h1>📝 Manifestação sobre Proposta da ANVISA</h1>
+            <p class="lead">Crie e envie sua manifestação sobre a proposta normativa da ANVISA para produtos de Cannabis.</p>
+        </section>
+        
+        <section class="module-nav">
+            <div class="module-card">
+                <h2><span class="icon">📋</span> Criar Manifestação</h2>
+                <p>Gere sua manifestação personalizada com argumentos jurídicos e científicos pré-elaborados sobre a proposta da ANVISA.</p>
+                <button id="createManifestationBtn" class="btn btn-primary">Criar Manifestação</button>
+            </div>
+            
+            <div class="module-card">
+                <h2><span class="icon">📄</span> Baixar em PDF</h2>
+                <p>Baixe sua manifestação em formato PDF com formatação profissional, pronta para envio ou impressão.</p>
+                <button id="generatePdfBtn" class="btn btn-primary">Gerar PDF</button>
+            </div>
+            
+            <div class="module-card">
+                <h2><span class="icon">✉️</span> Enviar por E-mail</h2>
+                <p>Envie sua manifestação diretamente para a ANVISA por e-mail, com cópia para você, de forma rápida e segura.</p>
+                <button id="sendEmailBtn" class="btn btn-primary">Enviar E-mail</button>
+            </div>
+        </section>
+        
+        <section id="manifestationForm" class="manifestation-form" style="display: none;">
+            <h3>Formulário de Manifestação</h3>
+            <form id="anvisaForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Nome Completo</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="email">E-mail</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="cpf">CPF</label>
+                            <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="profession">Profissão</label>
+                            <input type="text" class="form-control" id="profession">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Pontos a serem abordados</label>
+                    <div class="form-check-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="point1" checked>
+                            <label class="form-check-label" for="point1">
+                                Autocultivo para fins medicinais
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="point2" checked>
+                            <label class="form-check-label" for="point2">
+                                Jurisprudência favorável ao uso medicinal
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="point3" checked>
+                            <label class="form-check-label" for="point3">
+                                Reconhecimento das associações de pacientes
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="point4" checked>
+                            <label class="form-check-label" for="point4">
+                                Uso da planta in natura
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="point5">
+                            <label class="form-check-label" for="point5">
+                                Redução de custos para pacientes
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="additionalComments">Comentários Adicionais</label>
+                    <textarea class="form-control" id="additionalComments" rows="4"></textarea>
+                </div>
+                
+                <div class="preview-section">
+                    <h4>Prévia da Manifestação</h4>
+                    <div id="previewContent" class="preview-content">
+                        <p>Sua manifestação será gerada com base nos pontos selecionados acima.</p>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="button" id="previewBtn" class="btn btn-secondary">Atualizar Prévia</button>
+                    <button type="button" id="downloadPdfBtn" class="btn btn-primary">Baixar PDF</button>
+                    <button type="button" id="emailSubmitBtn" class="btn btn-success">Enviar por E-mail</button>
+                </div>
+            </form>
+        </section>
+        
+        <section class="stats-section">
+            <h2>Impacto das Manifestações</h2>
+            <p>Dados baseados em consultas públicas anteriores e seu impacto na regulamentação.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Manifestações Enviadas</h3>
+                    <div class="stat-value">2.500+</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pontos Incorporados</h3>
+                    <div class="stat-value">65%</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Mudanças na Proposta</h3>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Satisfação dos Usuários</h3>
+                    <div class="stat-value">89%</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="info-section">
+            <h2>Pontos Importantes da Proposta</h2>
+            <p>Conheça os principais pontos da proposta normativa da ANVISA e como sua manifestação pode fazer diferença.</p>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-seedling"></i> Autocultivo</h3>
+                    <p>A proposta atual não reconhece o direito ao autocultivo, mesmo quando exercido de forma responsável e para fins medicinais.</p>
+                    <ul>
+                        <li>Não há menção ao cultivo doméstico</li>
+                        <li>Ignora decisões judiciais favoráveis</li>
+                        <li>Restringe acesso a pacientes de baixa renda</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-balance-scale"></i> Jurisprudência</h3>
+                    <p>A proposta não considera a jurisprudência recente do STF e outros tribunais sobre o tema.</p>
+                    <ul>
+                        <li>RE 635659 sobre descriminalização</li>
+                        <li>REsp 2.121.548/SP sobre cultivo doméstico</li>
+                        <li>Habeas Corpus preventivos concedidos</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> Associações</h3>
+                    <p>A proposta não reconhece o papel das associações de cultivo coletivo que já operam com autorização judicial.</p>
+                    <ul>
+                        <li>Associações seguem protocolos rigorosos</li>
+                        <li>Oferecem produtos de qualidade a custo acessível</li>
+                        <li>Fornecem suporte e orientação aos pacientes</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-leaf"></i> Planta in natura</h3>
+                    <p>O artigo 9º da minuta proíbe integralmente a comercialização da planta in natura.</p>
+                    <ul>
+                        <li>Desconsidera métodos tradicionais de uso</li>
+                        <li>Ignora vaporização de flores secas</li>
+                        <li>Restringe preparos artesanais seguros</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="workflow-section">
+            <h2>Como Participar da Consulta Pública</h2>
+            <p>Siga estas etapas para enviar sua manifestação e contribuir com a consulta pública da ANVISA.</p>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Criar Manifestação</div>
+                    <div class="step-desc">Preencha o formulário com seus dados e selecione os pontos que deseja abordar.</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Revisar Conteúdo</div>
+                    <div class="step-desc">Verifique a prévia da manifestação e faça ajustes se necessário.</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Baixar ou Enviar</div>
+                    <div class="step-desc">Escolha entre baixar o PDF ou enviar diretamente por e-mail para a ANVISA.</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Compartilhar</div>
+                    <div class="step-desc">Incentive outras pessoas a participarem da consulta pública.</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Toast para notificações -->
+        <div class="toast-container">
+            <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto" id="toastTitle">Notificação</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+                </div>
+                <div class="toast-body" id="toastMessage">
+                    Mensagem de notificação
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos do formulário
+            const manifestationForm = document.getElementById('manifestationForm');
+            const createManifestationBtn = document.getElementById('createManifestationBtn');
+            const generatePdfBtn = document.getElementById('generatePdfBtn');
+            const sendEmailBtn = document.getElementById('sendEmailBtn');
+            const previewBtn = document.getElementById('previewBtn');
+            const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+            const emailSubmitBtn = document.getElementById('emailSubmitBtn');
+            const previewContent = document.getElementById('previewContent');
+            
+            // Elementos de formulário
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const cpfInput = document.getElementById('cpf');
+            const professionInput = document.getElementById('profession');
+            const point1Checkbox = document.getElementById('point1');
+            const point2Checkbox = document.getElementById('point2');
+            const point3Checkbox = document.getElementById('point3');
+            const point4Checkbox = document.getElementById('point4');
+            const point5Checkbox = document.getElementById('point5');
+            const additionalCommentsTextarea = document.getElementById('additionalComments');
+            
+            // Toast para notificações
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+            const bsToast = new bootstrap.Toast(toast);
+            
+            // Função para mostrar notificação
+            function showNotification(title, message, type = 'success') {
+                toastTitle.textContent = title;
+                toastMessage.textContent = message;
+                
+                toast.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'text-white');
+                
+                if (type === 'success') {
+                    toast.classList.add('bg-success', 'text-white');
+                } else if (type === 'error') {
+                    toast.classList.add('bg-danger', 'text-white');
+                } else if (type === 'warning') {
+                    toast.classList.add('bg-warning');
+                }
+                
+                bsToast.show();
+            }
+            
+            // Função para gerar o conteúdo da manifestação
+            function generateManifestationContent() {
+                const name = nameInput.value;
+                const profession = professionInput.value;
+                
+                let content = `<p><strong>À Agência Nacional de Vigilância Sanitária - ANVISA</strong></p>
+                <p><strong>Assunto:</strong> Manifestação sobre a proposta normativa para produtos de Cannabis</p>
+                <p>&nbsp;</p>
+                <p>Eu, ${name}`;
+                
+                if (profession) {
+                    content += `, ${profession},`;
+                }
+                
+                content += ` venho por meio desta apresentar minha manifestação sobre a proposta normativa da ANVISA para produtos de Cannabis.</p>
+                <p>&nbsp;</p>`;
+                
+                if (point1Checkbox.checked) {
+                    content += `<p><strong>1. Sobre o autocultivo para fins medicinais:</strong></p>
+                    <p>A proposta atual não reconhece o direito ao autocultivo, mesmo quando exercido de forma responsável e para fins medicinais. Esta omissão ignora a realidade de milhares de pacientes que já cultivam Cannabis para tratamento próprio ou de familiares, muitos com autorização judicial.</p>
+                    <p>O autocultivo representa uma alternativa economicamente viável para pacientes que não podem arcar com os altos custos dos produtos importados ou mesmo dos futuros produtos nacionais. Além disso, permite que o paciente tenha controle sobre todo o processo produtivo, garantindo a qualidade do seu medicamento.</p>
+                    <p>&nbsp;</p>`;
+                }
+                
+                if (point2Checkbox.checked) {
+                    content += `<p><strong>2. Sobre a jurisprudência favorável:</strong></p>
+                    <p>A proposta ignora a crescente jurisprudência favorável ao uso medicinal da Cannabis, incluindo decisões importantes como o RE 635659 em trâmite no STF sobre descriminalização e o REsp 2.121.548/SP sobre cultivo doméstico.</p>
+                    <p>Diversos tribunais pelo país já concederam habeas corpus preventivos para cultivo medicinal, reconhecendo o direito à saúde e o acesso a tratamentos eficazes. A regulamentação deveria acompanhar esta evolução jurisprudencial, não ignorá-la.</p>
+                    <p>&nbsp;</p>`;
+                }
+                
+                if (point3Checkbox.checked) {
+                    content += `<p><strong>3. Sobre as associações de pacientes:</strong></p>
+                    <p>A proposta não reconhece o papel fundamental das associações de cultivo coletivo que já operam com autorização judicial em diversos estados brasileiros. Estas associações seguem protocolos rigorosos de cultivo, processamento e controle de qualidade.</p>
+                    <p>As associações representam um modelo bem-sucedido de acesso à Cannabis medicinal, oferecendo produtos de qualidade a custo acessível e fornecendo suporte e orientação aos pacientes. Este modelo deveria ser reconhecido e regulamentado, não ignorado.</p>
+                    <p>&nbsp;</p>`;
+                }
+                
+                if (point4Checkbox.checked) {
+                    content += `<p><strong>4. Sobre o uso da planta in natura:</strong></p>
+                    <p>O artigo 9º da minuta proíbe integralmente a comercialização da planta in natura, desconsiderando métodos tradicionais de uso como a vaporização de flores secas, que representa uma forma segura e eficaz de administração.</p>
+                    <p>Esta proibição restringe desnecessariamente o acesso a preparos artesanais seguros e eficazes, como óleos, tinturas e extratos, que muitos pacientes já utilizam com sucesso em seus tratamentos.</p>
+                    <p>&nbsp;</p>`;
+                }
+                
+                if (point5Checkbox.checked) {
+                    content += `<p><strong>5. Sobre a redução de custos para pacientes:</strong></p>
+                    <p>A proposta não aborda adequadamente a questão dos custos dos produtos à base de Cannabis, que atualmente são proibitivos para a maioria dos pacientes que necessitam deste tratamento.</p>
+                    <p>É fundamental que a regulamentação considere mecanismos para redução de custos, como a inclusão no SUS, cobertura por planos de saúde, e o reconhecimento de formas mais acessíveis de produção, como o autocultivo e as associações.</p>
+                    <p>&nbsp;</p>`;
+                }
+                
+                if (additionalCommentsTextarea.value) {
+                    content += `<p><strong>Comentários adicionais:</strong></p>
+                    <p>${additionalCommentsTextarea.value}</p>
+                    <p>&nbsp;</p>`;
+                }
+                
+                content += `<p>Diante do exposto, solicito que a ANVISA revise a proposta normativa, considerando os pontos acima mencionados, a fim de garantir uma regulamentação mais abrangente, justa e que atenda às reais necessidades dos pacientes que dependem da Cannabis para seus tratamentos.</p>
+                <p>&nbsp;</p>
+                <p>Atenciosamente,</p>
+                <p>${name}</p>`;
+                
+                return content;
+            }
+            
+            // Função para validar o formulário
+            function validateForm() {
+                if (!nameInput.value) {
+                    showNotification('Erro', 'Por favor, informe seu nome completo.', 'error');
+                    return false;
+                }
+                
+                if (!emailInput.value) {
+                    showNotification('Erro', 'Por favor, informe seu e-mail.', 'error');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Função para gerar PDF
+            function generatePDF() {
+                if (!validateForm()) return;
+                
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                const content = generateManifestationContent();
+                const plainText = content.replace(/<[^>]*>/g, '');
+                
+                const splitText = doc.splitTextToSize(plainText, 180);
+                doc.setFont('helvetica');
+                doc.setFontSize(12);
+                
+                let y = 20;
+                for (let i = 0; i < splitText.length; i++) {
+                    if (y > 280) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                    doc.text(splitText[i], 15, y);
+                    y += 7;
+                }
+                
+                const fileName = `manifestacao_anvisa_${nameInput.value.replace(/\s+/g, '_').toLowerCase()}.pdf`;
+                doc.save(fileName);
+                
+                showNotification('Sucesso', 'PDF gerado com sucesso!');
+            }
+            
+            // Função para enviar e-mail
+            function sendEmail() {
+                if (!validateForm()) return;
+                
+                // Simulação de envio de e-mail (em uma aplicação real, isso seria feito no servidor)
+                emailSubmitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+                emailSubmitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    emailSubmitBtn.innerHTML = 'Enviar por E-mail';
+                    emailSubmitBtn.disabled = false;
+                    showNotification('Sucesso', 'Manifestação enviada com sucesso para a ANVISA!');
+                }, 2000);
+            }
+            
+            // Event listeners
+            createManifestationBtn.addEventListener('click', function() {
+                manifestationForm.style.display = 'block';
+                manifestationForm.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            generatePdfBtn.addEventListener('click', function() {
+                manifestationForm.style.display = 'block';
+                manifestationForm.scrollIntoView({ behavior: 'smooth' });
+                
+                setTimeout(() => {
+                    showNotification('Dica', 'Preencha o formulário e clique em "Baixar PDF"', 'warning');
+                }, 500);
+            });
+            
+            sendEmailBtn.addEventListener('click', function() {
+                manifestationForm.style.display = 'block';
+                manifestationForm.scrollIntoView({ behavior: 'smooth' });
+                
+                setTimeout(() => {
+                    showNotification('Dica', 'Preencha o formulário e clique em "Enviar por E-mail"', 'warning');
+                }, 500);
+            });
+            
+            previewBtn.addEventListener('click', function() {
+                previewContent.innerHTML = generateManifestationContent();
+            });
+            
+            downloadPdfBtn.addEventListener('click', generatePDF);
+            
+            emailSubmitBtn.addEventListener('click', sendEmail);
+            
+            // Atualizar prévia quando os checkboxes mudarem
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    previewContent.innerHTML = generateManifestationContent();
+                });
+            });
+            
+            // Atualizar prévia quando os campos de texto mudarem
+            const textInputs = [nameInput, professionInput, additionalCommentsTextarea];
+            textInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    previewContent.innerHTML = generateManifestationContent();
+                });
+            });
+            
+            // Inicializar a prévia
+            previewContent.innerHTML = generateManifestationContent();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/anvisa.js"></script>
+</body>
+</html>

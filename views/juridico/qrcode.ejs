@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <section class="qrcode-section">
+            <h1>QR Code para Processo</h1>
+            
+            <% if (locals.error) { %>
+                <div class="error-message">
+                    <p><%= error %></p>
+                </div>
+            <% } else if (locals.qrCodePath) { %>
+                <div class="qrcode-display">
+                    <h2>QR Code para o Processo: <%= id %></h2>
+                    <div class="qrcode-image">
+                        <img src="<%= qrCodePath %>" alt="QR Code do processo <%= id %>">
+                    </div>
+                    <p class="qrcode-info">Este QR Code pode ser utilizado para acesso rápido às informações do seu processo.</p>
+                    <div class="qrcode-actions">
+                        <a href="<%= qrCodePath %>" class="btn btn-primary" download="qrcode_processo_<%= id %>.png">Baixar QR Code</a>
+                        <button onclick="window.print()" class="btn btn-secondary">Imprimir</button>
+                    </div>
+                </div>
+                
+                <div class="qrcode-instructions">
+                    <h3>Como utilizar:</h3>
+                    <ol>
+                        <li>Salve ou imprima este QR Code</li>
+                        <li>Mantenha-o com você para apresentação em caso de abordagem policial</li>
+                        <li>Ao ser escaneado, o QR Code exibirá as informações básicas do seu processo</li>
+                    </ol>
+                </div>
+            <% } else { %>
+                <div class="qrcode-form-container">
+                    <p class="lead">Gere um QR Code para exibição rápida do número do processo ou decisão.</p>
+                    
+                    <form action="/juridico/documentos/qrcode" method="GET" class="qrcode-form">
+                        <div class="form-field">
+                            <label for="id">Número do Processo</label>
+                            <input type="text" id="id" name="id" required placeholder="Ex: 0123456-78.2023.8.26.0000">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Gerar QR Code</button>
+                        </div>
+                    </form>
+                </div>
+            <% } %>
+            
+            <div class="back-link">
+                <a href="/juridico/documentos" class="btn btn-outline">Voltar para Central de Documentos</a>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

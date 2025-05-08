@@ -1,0 +1,612 @@
+<%- include('../partials/header') %>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
+
+<div class="container">
+  <h1 class="mt-4 mb-3">Calculadora de Nutrientes</h1>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Parâmetros</h5>
+        </div>
+        <div class="card-body">
+          <form id="nutrientes-form">
+            <div class="form-group mb-3">
+              <label for="growth-phase">Fase de Crescimento</label>
+              <select class="form-select" id="growth-phase">
+                <option value="mudas">Mudas/Clones</option>
+                <option value="vegetativo" selected>Vegetativo</option>
+                <option value="preFloração">Pré-Floração</option>
+                <option value="floração">Floração</option>
+                <option value="flush">Flush</option>
+              </select>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="substrate-type">Tipo de Substrato</label>
+              <select class="form-select" id="substrate-type">
+                <option value="solo">Solo</option>
+                <option value="coco">Coco</option>
+                <option value="hidroponia">Hidroponia</option>
+              </select>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="water-volume">Volume do Reservatório (L)</label>
+              <input type="number" class="form-control" id="water-volume" min="1" max="1000" step="1" value="20">
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="water-ec">EC/PPM da Água Base</label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="water-ec" min="0" max="3" step="0.1" value="0.2">
+                <select class="form-select" id="ec-unit" style="max-width: 120px;">
+                  <option value="ec">EC (mS/cm)</option>
+                  <option value="ppm500">PPM 500</option>
+                  <option value="ppm700">PPM 700</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="water-hardness">Dureza da Água</label>
+              <select class="form-select" id="water-hardness">
+                <option value="soft">Mole (< 100 ppm)</option>
+                <option value="medium" selected>Média (100-200 ppm)</option>
+                <option value="hard">Dura (> 200 ppm)</option>
+              </select>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label>Nutrientes Disponíveis</label>
+              <div class="nutrient-selection">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-grow" checked>
+                  <label class="form-check-label" for="nutrient-grow">Grow (Vegetativo)</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-bloom" checked>
+                  <label class="form-check-label" for="nutrient-bloom">Bloom (Floração)</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-micro" checked>
+                  <label class="form-check-label" for="nutrient-micro">Micro</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-calmag">
+                  <label class="form-check-label" for="nutrient-calmag">CalMag</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-silicio">
+                  <label class="form-check-label" for="nutrient-silicio">Silício</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-enzimas">
+                  <label class="form-check-label" for="nutrient-enzimas">Enzimas</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-pk">
+                  <label class="form-check-label" for="nutrient-pk">PK Booster</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-raizes">
+                  <label class="form-check-label" for="nutrient-raizes">Estimulador de Raízes</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="nutrient-floracao">
+                  <label class="form-check-label" for="nutrient-floracao">Potenciador de Floração</label>
+                </div>
+              </div>
+            </div>
+            
+            <button type="button" id="calculate-btn" class="btn btn-primary">Calcular Nutrientes</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Identificador de Deficiências</h5>
+        </div>
+        <div class="card-body">
+          <div class="form-group mb-3">
+            <label>Selecione os Sintomas Observados</label>
+            <div class="symptom-selection">
+              <div class="form-check">
+                <input class="form-check-input symptom-check" type="checkbox" id="symptom-yellow-lower">
+                <label class="form-check-label" for="symptom-yellow-lower">Folhas inferiores amarelando</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input symptom-check" type="checkbox" id="symptom-purple">
+                <label class="form-check-label" for="symptom-purple">Folhas roxas/vermelhas</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input symptom-check" type="checkbox" id="symptom-edges">
+                <label class="form-check-label" for="symptom-edges">Bordas amareladas/marrons</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input symptom-check" type="checkbox" id="symptom-brown-spots">
+                <label class="form-check-label" for="symptom-brown-spots">Pontos marrons nas folhas</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input symptom-check" type="checkbox" id="symptom-veins">
+                <label class="form-check-label" for="symptom-veins">Amarelamento entre nervuras</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input symptom-check" type="checkbox" id="symptom-twisted">
+                <label class="form-check-label" for="symptom-twisted">Folhas retorcidas</label>
+              </div>
+            </div>
+            <button type="button" id="identify-btn" class="btn btn-secondary mt-2">Identificar Deficiências</button>
+          </div>
+          <div id="deficiency-results" class="mt-3" style="display: none;">
+            <h6>Possíveis Deficiências:</h6>
+            <div id="deficiency-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Dosagem de Nutrientes</h5>
+        </div>
+        <div class="card-body">
+          <div id="calculation-results" style="display: none;">
+            <div class="alert alert-info mb-3">
+              <strong>EC Alvo:</strong> <span id="target-ec">1.2</span> mS/cm 
+              (<span id="target-ppm">600</span> ppm) | 
+              <strong>EC Resultante:</strong> <span id="result-ec">1.1</span> mS/cm
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nutriente</th>
+                    <th>ml por Litro</th>
+                    <th>Quantidade Total</th>
+                  </tr>
+                </thead>
+                <tbody id="nutrient-table">
+                  <!-- Preenchido via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div id="incompatibilities" class="alert alert-warning mt-3" style="display: none;">
+              <strong>Atenção! Incompatibilidades detectadas:</strong>
+              <ul id="incompatibility-list"></ul>
+            </div>
+          </div>
+          
+          <div id="no-results" class="text-center py-4">
+            <p class="text-muted">Clique em "Calcular Nutrientes" para gerar a tabela de dosagem.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5>Níveis de Nutrientes</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="nutrient-levels-chart" width="100%" height="250"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h5>Cronograma Semanal</h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Semana</th>
+                      <th>% da Dose</th>
+                      <th>EC Alvo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="schedule-table">
+                    <!-- Preenchido via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" id="view-schedule-btn" class="btn btn-sm btn-outline-primary mt-2" style="display: none;">
+                Ver Cronograma Detalhado
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Sobre Nutrição de Cannabis</h5>
+        </div>
+        <div class="card-body">
+          <p>A nutrição adequada é fundamental para o cultivo bem-sucedido de cannabis. Cada fase de crescimento requer diferentes proporções de nutrientes:</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Macronutrientes (NPK)</h6>
+              <ul>
+                <li><strong>Nitrogênio (N):</strong> Essencial para o crescimento vegetativo, desenvolvimento de folhas e estrutura da planta.</li>
+                <li><strong>Fósforo (P):</strong> Crucial para o desenvolvimento de raízes, floração e produção de resina.</li>
+                <li><strong>Potássio (K):</strong> Importante para a saúde geral da planta, resistência a doenças e desenvolvimento de botões.</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>Nutrientes Secundários e Micronutrientes</h6>
+              <ul>
+                <li><strong>Cálcio (Ca) e Magnésio (Mg):</strong> Essenciais para a estrutura celular e fotossíntese.</li>
+                <li><strong>Enxofre (S):</strong> Componente de aminoácidos e proteínas.</li>
+                <li><strong>Micronutrientes (Fe, Zn, Mn, B, etc.):</strong> Necessários em pequenas quantidades para funções enzimáticas e metabólicas.</li>
+              </ul>
+            </div>
+          </div>
+          
+          <h6 class="mt-3">Medição e Monitoramento</h6>
+          <p>A condutividade elétrica (EC) é uma medida da concentração total de sais dissolvidos na solução nutritiva. Diferentes fases de crescimento e substratos requerem diferentes níveis de EC:</p>
+          <ul>
+            <li><strong>Mudas/Clones:</strong> EC baixa (0.4-1.2 mS/cm)</li>
+            <li><strong>Vegetativo:</strong> EC média (0.8-2.2 mS/cm)</li>
+            <li><strong>Floração:</strong> EC mais alta (1.2-2.6 mS/cm)</li>
+            <li><strong>Flush:</strong> EC muito baixa (0-0.4 mS/cm)</li>
+          </ul>
+          
+          <p class="small text-muted mt-3">Nota: Esta calculadora fornece recomendações gerais. Ajuste as dosagens com base na resposta específica das suas plantas e nas recomendações do fabricante dos nutrientes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal para Cronograma Detalhado -->
+  <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="scheduleModalLabel">Cronograma Detalhado de Alimentação</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Nutriente</th>
+                  <th>Semana 1</th>
+                  <th>Semana 2</th>
+                  <th>Semana 3</th>
+                  <th>Semana 4</th>
+                </tr>
+              </thead>
+              <tbody id="detailed-schedule-table">
+                <!-- Preenchido via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary" id="download-schedule-btn">Baixar PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/nutrientes-calculator.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do formulário
+    const growthPhaseSelect = document.getElementById('growth-phase');
+    const substrateTypeSelect = document.getElementById('substrate-type');
+    const waterVolumeInput = document.getElementById('water-volume');
+    const waterECInput = document.getElementById('water-ec');
+    const ecUnitSelect = document.getElementById('ec-unit');
+    const waterHardnessSelect = document.getElementById('water-hardness');
+    const calculateBtn = document.getElementById('calculate-btn');
+    
+    // Elementos de resultado
+    const calculationResults = document.getElementById('calculation-results');
+    const noResults = document.getElementById('no-results');
+    const targetECSpan = document.getElementById('target-ec');
+    const targetPPMSpan = document.getElementById('target-ppm');
+    const resultECSpan = document.getElementById('result-ec');
+    const nutrientTable = document.getElementById('nutrient-table');
+    const incompatibilitiesDiv = document.getElementById('incompatibilities');
+    const incompatibilityList = document.getElementById('incompatibility-list');
+    const scheduleTable = document.getElementById('schedule-table');
+    const viewScheduleBtn = document.getElementById('view-schedule-btn');
+    const detailedScheduleTable = document.getElementById('detailed-schedule-table');
+    
+    // Elementos de deficiência
+    const symptomChecks = document.querySelectorAll('.symptom-check');
+    const identifyBtn = document.getElementById('identify-btn');
+    const deficiencyResults = document.getElementById('deficiency-results');
+    const deficiencyList = document.getElementById('deficiency-list');
+    
+    // Contexto do gráfico
+    const nutrientLevelsCtx = document.getElementById('nutrient-levels-chart').getContext('2d');
+    let nutrientLevelsChart;
+    
+    // Inicializar gráfico
+    function initNutrientLevelsChart(data) {
+      if (nutrientLevelsChart) {
+        nutrientLevelsChart.destroy();
+      }
+      
+      nutrientLevelsChart = new Chart(nutrientLevelsCtx, {
+        type: 'radar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              min: 0,
+              max: 5,
+              ticks: {
+                stepSize: 1
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    // Obter nutrientes selecionados
+    function getSelectedNutrients() {
+      const selected = {};
+      
+      selected["Grow (Vegetativo)"] = document.getElementById('nutrient-grow').checked;
+      selected["Bloom (Floração)"] = document.getElementById('nutrient-bloom').checked;
+      selected["Micro"] = document.getElementById('nutrient-micro').checked;
+      selected["CalMag"] = document.getElementById('nutrient-calmag').checked;
+      selected["Silício"] = document.getElementById('nutrient-silicio').checked;
+      selected["Enzimas"] = document.getElementById('nutrient-enzimas').checked;
+      selected["PK Booster"] = document.getElementById('nutrient-pk').checked;
+      selected["Estimulador de Raízes"] = document.getElementById('nutrient-raizes').checked;
+      selected["Potenciador de Floração"] = document.getElementById('nutrient-floracao').checked;
+      
+      return selected;
+    }
+    
+    // Calcular nutrientes
+    function calculateNutrientsHandler() {
+      const phase = growthPhaseSelect.value;
+      const substrate = substrateTypeSelect.value;
+      const waterVolume = parseFloat(waterVolumeInput.value);
+      const waterECValue = parseFloat(waterECInput.value);
+      const ecUnit = ecUnitSelect.value;
+      const waterHardness = waterHardnessSelect.value;
+      const selectedNutrients = getSelectedNutrients();
+      
+      // Converter EC para unidade padrão se necessário
+      let waterEC = waterECValue;
+      if (ecUnit !== 'ec') {
+        waterEC = convertECPPM(waterECValue, ecUnit, 'ec');
+      }
+      
+      // Calcular nutrientes
+      const result = calculateNutrients(phase, substrate, waterVolume, waterEC, waterHardness, selectedNutrients);
+      
+      // Verificar incompatibilidades
+      const incompatibilities = checkIncompatibilities(selectedNutrients);
+      
+      // Gerar cronograma
+      const schedule = generateFeedingSchedule(phase, result.dosages);
+      
+      // Gerar dados para gráfico
+      const nutrientLevelsData = generateNutrientLevelsData(result.dosages, phase);
+      
+      // Atualizar interface
+      updateResults(result, incompatibilities, schedule, nutrientLevelsData);
+    }
+    
+    // Atualizar resultados na interface
+    function updateResults(result, incompatibilities, schedule, nutrientLevelsData) {
+      // Mostrar resultados
+      calculationResults.style.display = 'block';
+      noResults.style.display = 'none';
+      viewScheduleBtn.style.display = 'block';
+      
+      // Atualizar EC alvo e resultante
+      targetECSpan.textContent = result.targetEC.toFixed(2);
+      targetPPMSpan.textContent = Math.round(result.targetEC * 500);
+      resultECSpan.textContent = result.resultEC.toFixed(2);
+      
+      // Limpar e preencher tabela de nutrientes
+      nutrientTable.innerHTML = '';
+      
+      for (const [nutrient, info] of Object.entries(result.dosages)) {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = nutrient;
+        
+        const mlPerLiterCell = document.createElement('td');
+        mlPerLiterCell.textContent = `${info.mlPerLiter.toFixed(1)} ml/L`;
+        
+        const mlTotalCell = document.createElement('td');
+        mlTotalCell.textContent = `${info.mlTotal.toFixed(1)} ml`;
+        
+        row.appendChild(nameCell);
+        row.appendChild(mlPerLiterCell);
+        row.appendChild(mlTotalCell);
+        
+        nutrientTable.appendChild(row);
+      }
+      
+      // Mostrar incompatibilidades se houver
+      if (incompatibilities.length > 0) {
+        incompatibilitiesDiv.style.display = 'block';
+        incompatibilityList.innerHTML = '';
+        
+        incompatibilities.forEach(incompatibility => {
+          const li = document.createElement('li');
+          li.textContent = incompatibility;
+          incompatibilityList.appendChild(li);
+        });
+      } else {
+        incompatibilitiesDiv.style.display = 'none';
+      }
+      
+      // Preencher tabela de cronograma
+      scheduleTable.innerHTML = '';
+      
+      const weeklyFactors = {
+        mudas: { week1: 0.5, week2: 0.7, week3: 0.9, week4: 1.0 },
+        vegetativo: { week1: 0.7, week2: 0.8, week3: 0.9, week4: 1.0 },
+        preFloração: { week1: 0.8, week2: 0.9, week3: 1.0, week4: 1.0 },
+        floração: { week1: 0.9, week2: 1.0, week3: 1.0, week4: 0.9 },
+        flush: { week1: 0, week2: 0, week3: 0, week4: 0 }
+      };
+      
+      const phase = growthPhaseSelect.value;
+      const factors = weeklyFactors[phase];
+      
+      for (const [week, factor] of Object.entries(factors)) {
+        const weekNumber = week.replace('week', '');
+        
+        const row = document.createElement('tr');
+        
+        const weekCell = document.createElement('td');
+        weekCell.textContent = `Semana ${weekNumber}`;
+        
+        const factorCell = document.createElement('td');
+        factorCell.textContent = `${(factor * 100).toFixed(0)}%`;
+        
+        const ecCell = document.createElement('td');
+        ecCell.textContent = `${(result.targetEC * factor).toFixed(2)} mS/cm`;
+        
+        row.appendChild(weekCell);
+        row.appendChild(factorCell);
+        row.appendChild(ecCell);
+        
+        scheduleTable.appendChild(row);
+      }
+      
+      // Preencher tabela de cronograma detalhado
+      detailedScheduleTable.innerHTML = '';
+      
+      for (const [nutrient, info] of Object.entries(result.dosages)) {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = nutrient;
+        row.appendChild(nameCell);
+        
+        for (let i = 1; i <= 4; i++) {
+          const weekCell = document.createElement('td');
+          const weekFactor = factors[`week${i}`];
+          weekCell.textContent = `${(info.mlPerLiter * weekFactor).toFixed(1)} ml/L`;
+          row.appendChild(weekCell);
+        }
+        
+        detailedScheduleTable.appendChild(row);
+      }
+      
+      // Inicializar gráfico
+      initNutrientLevelsChart(nutrientLevelsData);
+    }
+    
+    // Identificar deficiências
+    function identifyDeficienciesHandler() {
+      const selectedSymptoms = [];
+      
+      symptomChecks.forEach(check => {
+        if (check.checked) {
+          const symptom = check.nextElementSibling.textContent;
+          selectedSymptoms.push(symptom);
+        }
+      });
+      
+      if (selectedSymptoms.length === 0) {
+        alert('Por favor, selecione pelo menos um sintoma.');
+        return;
+      }
+      
+      const possibleDeficiencies = identifyDeficiencies(selectedSymptoms);
+      
+      // Mostrar resultados
+      deficiencyResults.style.display = 'block';
+      deficiencyList.innerHTML = '';
+      
+      if (possibleDeficiencies.length === 0) {
+        deficiencyList.innerHTML = '<p>Nenhuma deficiência específica identificada com base nos sintomas selecionados.</p>';
+        return;
+      }
+      
+      possibleDeficiencies.forEach(deficiency => {
+        const defDiv = document.createElement('div');
+        defDiv.className = 'mb-3';
+        
+        const title = document.createElement('h6');
+        title.textContent = `Deficiência de ${deficiency.nutrient.charAt(0).toUpperCase() + deficiency.nutrient.slice(1)}`;
+        
+        const symptoms = document.createElement('p');
+        symptoms.className = 'small mb-1';
+        symptoms.textContent = `Sintomas: ${deficiency.symptoms}`;
+        
+        const solutionsList = document.createElement('ul');
+        solutionsList.className = 'small';
+        
+        deficiency.solutions.forEach(solution => {
+          const li = document.createElement('li');
+          li.textContent = solution;
+          solutionsList.appendChild(li);
+        });
+        
+        defDiv.appendChild(title);
+        defDiv.appendChild(symptoms);
+        defDiv.appendChild(solutionsList);
+        
+        deficiencyList.appendChild(defDiv);
+      });
+    }
+    
+    // Event listeners
+    calculateBtn.addEventListener('click', calculateNutrientsHandler);
+    identifyBtn.addEventListener('click', identifyDeficienciesHandler);
+    
+    viewScheduleBtn.addEventListener('click', function() {
+      const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+      scheduleModal.show();
+    });
+    
+    // Inicialização
+    initNutrientLevelsChart({
+      labels: ['Nitrogênio (N)', 'Fósforo (P)', 'Potássio (K)', 'Cálcio (Ca)', 'Magnésio (Mg)', 'Micronutrientes'],
+      datasets: [{
+        label: 'Nível Atual',
+        data: [0, 0, 0, 0, 0, 0],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Nível Ideal',
+        data: [3, 1, 2, 2, 1, 1],
+        backgroundColor: 'rgba(255, 206, 86, 0.5)',
+        borderColor: 'rgba(255, 206, 86, 1)',
+        borderWidth: 1
+      }]
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>

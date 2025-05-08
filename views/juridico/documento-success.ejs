@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <section class="success-section">
+            <div class="success-message">
+                <h1>Documento Gerado com Sucesso!</h1>
+                <p class="lead"><%= message %></p>
+                
+                <div class="document-preview">
+                    <h2>Seu <%= documentoNome %> está pronto</h2>
+                    <p>Você pode visualizar, baixar ou imprimir seu documento.</p>
+                    
+                    <div class="document-actions">
+                        <a href="<%= pdfPath %>" class="btn btn-primary" target="_blank">Visualizar PDF</a>
+                        <a href="<%= pdfPath %>" class="btn btn-secondary" download="<%= fileName %>">Baixar PDF</a>
+                        <button onclick="window.print()" class="btn btn-secondary">Imprimir</button>
+                    </div>
+                </div>
+                
+                <div class="next-steps">
+                    <h2>Próximos Passos</h2>
+                    <ol>
+                        <li>Revise o documento gerado para garantir que todas as informações estão corretas.</li>
+                        <li>Imprima o documento e assine no local indicado.</li>
+                        <li>Mantenha uma cópia do documento com você para apresentar quando necessário.</li>
+                        <li>Considere anexar este documento ao seu Habeas Corpus Preventivo para fortalecer seu pedido.</li>
+                    </ol>
+                </div>
+                
+                <div class="other-options">
+                    <h2>Outras Opções</h2>
+                    <div class="options-buttons">
+                        <a href="/juridico/documentos" class="btn btn-outline">Voltar para Central de Documentos</a>
+                        <a href="/juridico/habeas-corpus" class="btn btn-outline">Gerar Habeas Corpus</a>
+                        <a href="/juridico/jurisprudencia" class="btn btn-outline">Consultar Jurisprudência</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

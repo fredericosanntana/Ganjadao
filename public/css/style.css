@@ -1,0 +1,1024 @@
+/*
+ GanjaDAO Styles - Revisado e Organizado
+ Versão: 1.1
+ Data: 07 de Maio de 2025
+
+ Estrutura do Arquivo:
+ 1. Variáveis Globais e Reset Básico
+ 2. Estilos Globais (Body, Tipografia, Links)
+ 3. Componentes Reutilizáveis (Botões, Cards, Formulários)
+ 4. Layout Principal (Header, Footer, Navegação)
+ 5. Seções Específicas de Páginas (Hero, Calculadoras, Anvisa, etc.)
+ 6. Estilos para Gráficos (Chart.js)
+ 7. Classes Utilitárias
+ 8. Media Queries (Responsividade)
+*/
+
+/* 1. Variáveis Globais e Reset Básico
+-------------------------------------------------- */
+:root {
+  /* Paleta de Cores Principal (GanjaDAO) */
+  --ganjadao-verde-escuro: #1A3B2A;
+  --ganjadao-dourado: #C5A942;
+  --ganjadao-roxo-profundo: #6D4C85;
+
+  /* Cores de Suporte */
+  --ganjadao-verde-secundario: #2a5c3f;
+  --ganjadao-cinza-claro: #F5F5F5; /* Fundo principal do corpo */
+  --ganjadao-cinza-medio: #e0e0e0; /* Bordas, divisores */
+  --ganjadao-cinza-escuro: #333333; /* Texto secundário */
+  --ganjadao-branco: #FFFFFF;
+  --ganjadao-preto: #1c1c1c; /* Texto principal */
+
+  /* Cores de Feedback (compatível com Bootstrap) */
+  --ganjadao-success: #28a745;
+  --ganjadao-info: #17a2b8;
+  --ganjadao-warning: #ffc107;
+  --ganjadao-danger: #dc3545;
+
+  /* Tipografia */
+  --font-institucional: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fonte para títulos, navegação */
+  --font-humana: 'Georgia', serif; /* Fonte para corpo de texto, conteúdo */
+  --font-base-size: 16px; /* Base para REM */
+
+  /* Outras Variáveis */
+  --border-radius-base: 6px;
+  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition-base: all 0.3s ease-in-out;
+  --container-max-width: 1140px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: var(--font-base-size);
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* 2. Estilos Globais (Body, Tipografia, Links)
+-------------------------------------------------- */
+body {
+  font-family: var(--font-humana);
+  line-height: 1.6;
+  color: var(--ganjadao-preto);
+  background-color: var(--ganjadao-cinza-claro);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container { /* Mantendo consistência com Bootstrap, mas permitindo customização */
+  width: 90%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.inner-container {
+  padding: 2rem 0;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-institucional);
+  color: var(--ganjadao-verde-escuro);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+h1 { font-size: 2.5rem; } /* Ajustado para melhor hierarquia */
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--ganjadao-dourado);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+a:hover, a:focus {
+  color: var(--ganjadao-dourado);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Remove espaço extra abaixo das imagens */
+}
+
+/* 3. Componentes Reutilizáveis (Botões, Cards, Formulários)
+-------------------------------------------------- */
+
+/* Botões (Estilo base customizado, compatível com .btn do Bootstrap) */
+.btn {
+  display: inline-block;
+  font-family: var(--font-institucional);
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  border: 2px solid transparent;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: var(--border-radius-base);
+  transition: var(--transition-base);
+  text-decoration: none;
+}
+.btn:hover, .btn:focus {
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--ganjadao-verde-secundario);
+  color: var(--ganjadao-branco);
+  border-color: var(--ganjadao-dourado);
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #b39231; /* Dourado mais escuro */
+  color: var(--ganjadao-branco);
+  border-color: #b39231;
+}
+
+.btn-secondary {
+  background-color: var(--ganjadao-roxo-profundo);
+  color: var(--ganjadao-branco);
+  border-color: var(--ganjadao-roxo-profundo);
+}
+.btn-secondary:hover, .btn-secondary:focus {
+  background-color: var(--ganjadao-roxo-profundo); /* Roxo mais escuro */
+  color: var(--ganjadao-branco);
+  border-color: var(--ganjadao-roxo-profundo);
+}
+
+.btn-outline {
+  border-color: var(--ganjadao-verde-escuro);
+  color: var(--ganjadao-verde-escuro);
+}
+.btn-outline:hover, .btn-outline:focus {
+  background-color: var(--ganjadao-verde-escuro);
+  color: var(--ganjadao-branco);
+}
+
+/* Cards (Estilo base para .card do Bootstrap, se necessário) */
+.card {
+  margin-bottom: 1.5rem; /* Espaçamento padrão entre cards */
+  box-shadow: var(--shadow-base);
+  border: none; /* Remover borda padrão do Bootstrap se preferir apenas sombra */
+}
+
+.card-header {
+    background-color: var(--ganjadao-cinza-claro);
+    border-bottom: 1px solid var(--ganjadao-cinza-medio);
+}
+
+/* Formulários (Estilos para inputs, labels, etc., complementando Bootstrap) */
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-control:focus {
+  border-color: var(--ganjadao-dourado);
+  box-shadow: 0 0 0 0.2rem rgba(197, 169, 66, 0.25); /* Sombra de foco dourada */
+}
+/* ---------------------------
+   Formulário de Documento
+--------------------------- */
+/* -------- Form Section Centralization -------- */
+.form-section {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+/* Ensure main container is centered */
+main.container {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Maintain spacing between legend and fieldset */
+fieldset {
+  margin-bottom: 1.5rem;
+}
+
+/* Button group alignment and spacing */
+.form-section .btn {
+  min-width: 120px;
+}
+/* Centraliza o formulário e ajusta espaçamentos */
+.form-section {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Limita largura máxima do container principal */
+main.container {
+  max-width: 800px;
+}
+
+/* Espaçamento interno consistente */
+fieldset {
+  background-color: var(--ganjadao-branco);
+  border-color: var(--ganjadao-cinza-medio);
+}
+
+legend {
+  color: var(--ganjadao-roxo-profundo);
+  font-weight: 600;
+}
+
+/* Ajuste nos botões de ação */
+.form-section .btn {
+  min-width: 110px;
+}
+
+
+.documento-form fieldset {
+  border-color: var(--ganjadao-cinza-medio);
+}
+.documento-form legend {
+  font-weight: 600;
+  color: var(--ganjadao-roxo-profundo);
+}
+
+.documento-form .form-label {
+  font-weight: 500;
+}
+
+.form-section .btn {
+  min-width: 120px;
+}
+
+/* Override container padding */
+.page-section.light-bg-alt {
+  padding: 4rem 0;
+}
+
+/* 4. Layout Principal (Header, Footer, Navegação)
+-------------------------------------------------- */
+
+/* Header */
+.main-header {
+  background-color: var(--ganjadao-verde-escuro);
+  color: var(--ganjadao-branco);
+  padding: 0.75rem 0; /* Ajuste no padding */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1020; /* Abaixo de modais do Bootstrap (1050+), mas acima do conteúdo */
+  width: 100%;
+}
+
+.main-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-header .logo img {
+  max-height: 50px; /* Tamanho da logo ajustado */
+}
+
+.main-header .logo a {
+  font-family: var(--font-institucional);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--ganjadao-dourado);
+  text-decoration: none;
+}
+
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main-nav a {
+  color: var(--ganjadao-branco);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--ganjadao-dourado);
+}
+
+.main-nav a.active::after { /* Indicador de página ativa */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--ganjadao-dourado);
+}
+
+/* Botão de HC no Header */
+.main-header .btn-hc-sticky {
+  background-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-preto); /* Melhor contraste */
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: var(--border-radius-base);
+}
+.main-header .btn-hc-sticky:hover {
+  background-color: #b39231;
+}
+
+/* Footer */
+.main-footer {
+  background-color: var(--ganjadao-verde-escuro);
+  color: var(--ganjadao-cinza-claro);
+  padding: 3rem 0 1.5rem 0;
+  text-align: left;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+  font-family: var(--font-institucional);
+  color: var(--ganjadao-dourado);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: var(--ganjadao-cinza-claro);
+  text-decoration: none;
+}
+.footer-links a:hover {
+  color: var(--ganjadao-dourado);
+  text-decoration: underline;
+}
+
+.footer-social-icons a {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  color: var(--ganjadao-cinza-claro);
+}
+.footer-social-icons a:hover {
+  color: var(--ganjadao-dourado);
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.newsletter-form input[type="email"] {
+  padding: 0.75rem;
+  border: 1px solid var(--ganjadao-verde-secundario);
+  background-color: rgba(255,255,255,0.1);
+  color: var(--ganjadao-branco);
+  border-radius: var(--border-radius-base);
+  flex-grow: 1;
+}
+
+.newsletter-form button {
+  background-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-preto);
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+}
+
+.footer-mission-statement {
+  font-style: italic;
+  color: var(--ganjadao-dourado);
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--ganjadao-verde-secundario);
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+/* 5. Seções Específicas de Páginas
+-------------------------------------------------- */
+
+/* Estilos genéricos para seções de página */
+.page-section {
+  padding: 3rem 0;
+  text-align: center;
+}
+.page-section .inner-container {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page-section .section-subtitle {
+  font-size: 1.1rem;
+  color: var(--ganjadao-cinza-escuro);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: var(--ganjadao-verde-escuro);
+  color: var(--ganjadao-branco);
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section #hero-title {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: var(--ganjadao-branco);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-section .subheadline {
+  font-size: 1.2rem;
+  color: var(--ganjadao-cinza-claro);
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+}
+
+.hero-section .cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Seção 'O Problema' */
+#problema {
+  background-color: var(--ganjadao-cinza-claro);
+}
+#problema #problem-title {
+  color: var(--ganjadao-roxo-profundo);
+}
+#problema .problem-visual img {
+  max-width: 400px; /* Limita o tamanho da imagem */
+  margin: 2rem auto 0 auto;
+  border-radius: var(--border-radius-base);
+  border: 2px solid var(--ganjadao-roxo-profundo);
+  opacity: 0.9;
+}
+
+/* Seção 'A Solução' */
+#solucao {
+  background-color: var(--ganjadao-branco);
+}
+.solution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+  text-align: left;
+}
+.solution-block {
+  background-color: var(--ganjadao-verde-secundario);
+  padding: 2rem;
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--shadow-base);
+  transition: var(--transition-base);
+}
+.solution-block:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+.solution-block .icon {
+  font-size: 2.5rem;
+  color: var(--ganjadao-dourado);
+  margin-bottom: 1rem;
+  display: block;
+}
+.solution-block h3 {
+  font-size: 1.4rem;
+  color: var(--ganjadao-verde-escuro);
+  margin-bottom: 0.5rem;
+}
+
+/* Seção 'Prova Social' */
+#prova-social {
+  background-color: var(--ganjadao-cinza-claro);
+}
+#prova-social #social-title {
+  color: var(--ganjadao-roxo-profundo);
+}
+.testimonial-card {
+  background-color: var(--ganjadao-branco);
+  padding: 2rem;
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--shadow-base);
+  max-width: 650px;
+  margin: 2rem auto;
+  text-align: left;
+  border-left: 5px solid var(--ganjadao-dourado);
+}
+.testimonial-card blockquote {
+  font-family: var(--font-humana);
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+.testimonial-card blockquote::before {
+  content: open-quote;
+  font-size: 2em;
+  line-height: 0.1em;
+  margin-right: 0.1em;
+  vertical-align: -0.2em;
+  color: var(--ganjadao-dourado);
+}
+.testimonial-card figcaption.author {
+  font-weight: bold;
+  color: var(--ganjadao-verde-escuro);
+  text-align: right;
+}
+/* ----------------------------------
+   4. Prova Social
+---------------------------------- */
+.social-proof-section {
+  /* Já herda o fundo branco de light-bg-alt */
+}
+
+.social-proof-section .social-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Testimonial */
+.testimonial-card {
+  background-color: var(--ganjadao-branco);
+  border-left: 5px solid var(--ganjadao-dourado);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-base);
+  text-align: left;
+}
+.testimonial-card blockquote {
+  font-style: italic;
+  margin: 0 0 1rem;
+  color: var(--ganjadao-cinza-escuro);
+}
+.testimonial-card .author {
+  font-weight: bold;
+  color: var(--ganjadao-verde-escuro);
+  text-align: right;
+}
+
+/* Estatísticas */
+.stats-counter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+.stats-counter .stat {
+  display: flex;
+  flex-direction: column;
+}
+.stats-counter .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ganjadao-roxo-profundo);
+}
+.stats-counter .stat-label {
+  font-size: 1rem;
+  color: var(--ganjadao-cinza-escuro);
+}
+
+/* Vídeo */
+.video-container video {
+  width: 100%;
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--shadow-base);
+  display: block;
+}
+
+/* Seção 'Comunidade DAO' */
+#comunidade-dao {
+  background-color: var(--ganjadao-verde-secundario); /* Fundo diferenciado */
+  color: var(--ganjadao-branco);
+}
+#comunidade-dao #dao-title {
+  color: var(--ganjadao-branco);
+}
+#comunidade-dao .section-subtitle {
+  color: var(--ganjadao-cinza-claro);
+}
+.dao-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+  text-align: left;
+}
+.dao-block {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: var(--border-radius-base);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition-base);
+}
+.dao-block:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+.dao-block .icon {
+  font-size: 2.5rem;
+  color: var(--ganjadao-dourado);
+  margin-bottom: 1rem;
+}
+.dao-block h3 {
+  font-size: 1.4rem;
+  color: var(--ganjadao-branco);
+  margin-bottom: 0.5rem;
+}
+.dao-block p {
+  color: #d1d1d1;
+}
+
+/* Seção 'Educação' */
+#educacao {
+  background-color: var(--ganjadao-branco);
+}
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+  text-align: left;
+}
+.education-card-item {
+  background-color: var(--ganjadao-verde-secundario);
+  padding: 2rem;
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--shadow-base);
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-base);
+}
+.education-card-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+.education-card-item .icon {
+  font-size: 2.5rem;
+  color: var(--ganjadao-dourado);
+  margin-bottom: 1rem;
+}
+.education-card-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+.education-card-item p {
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+.education-card-item .btn-outline {
+  align-self: flex-start;
+  border-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-dourado);
+}
+.education-card-item .btn-outline:hover {
+  background-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-dourado);
+}
+
+/* Estilos para a página da Anvisa (anvisa/index.ejs) */
+.module-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.module-card {
+    flex: 1;
+    min-width: 280px; /* Ajuste para melhor responsividade */
+    background-color: var(--ganjadao-branco);
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-base);
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.module-card h2 {
+    color: var(--ganjadao-verde-escuro);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+.module-card h2 .icon {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+    color: var(--ganjadao-dourado);
+}
+.manifestation-form {
+    background-color: var(--ganjadao-branco);
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-base);
+    padding: 2rem;
+    margin: 2rem 0;
+}
+.preview-section {
+    background-color: #f9f9f9; /* Um cinza um pouco mais claro que o --ganjadao-cinza-claro */
+    border-radius: var(--border-radius-base);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border: 1px solid var(--ganjadao-cinza-medio);
+}
+.preview-content {
+    background-color: var(--ganjadao-branco);
+    border-radius: var(--border-radius-base);
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    max-height: 400px;
+    overflow-y: auto;
+    font-family: var(--font-humana);
+}
+.loading-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 0.2rem solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: var(--ganjadao-branco);
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 0.5rem;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 6. Estilos para Gráficos (Chart.js)
+-------------------------------------------------- */
+.calculator-chart-container {
+    position: relative;
+    margin: 1rem auto; /* Espaçamento e centralização */
+    height: auto;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--ganjadao-branco);
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-base);
+}
+
+/* Wrapper para canvas para controle de responsividade do Chart.js */
+.chart-wrapper {
+    position: relative;
+    height: 280px; /* Altura ajustada */
+    width: 100%;
+    height: auto !important;
+    max-height: 250px;
+    display: block;
+}
+
+.chart-wrapper canvas {
+    max-width: 100%;
+    /* Chart.js gerencia a altura, mas podemos definir max-height se necessário */
+}
+
+/* Garante que os cards das calculadoras tenham espaço */
+.calculators-page .card .card-body {
+    padding: 1rem; /* Padding interno nos cards das calculadoras */
+}
+
+/* Estilo para o container do gráfico nas páginas das calculadoras */
+.card-body .chart-wrapper canvas {
+    width: 100% !important; /* Força a largura total */
+    height: auto !important; /* Permite que Chart.js controle a altura responsivamente */
+    max-height: 250px; /* Limita a altura máxima para consistência */
+}
+
+/* 7. Classes Utilitárias
+-------------------------------------------------- */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 3rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 3rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+.p-5 { padding: 3rem; }
+
+.d-flex { display: flex; }
+.justify-content-between { justify-content: space-between; }
+.align-items-center { align-items: center; }
+
+.light-bg-alt {
+  background-color: var(--ganjadao-branco);
+  padding: 3rem 0;
+}
+
+.dark-bg {
+  background-color: var(--ganjadao-verde-escuro);
+  color: var(--ganjadao-branco);
+  padding: 3rem 0;
+}
+.dark-bg h1, .dark-bg h2, .dark-bg h3, .dark-bg h4, .dark-bg h5, .dark-bg h6 {
+  color: var(--ganjadao-branco);
+}
+.dark-bg p {
+  color: var(--ganjadao-cinza-claro);
+}
+.dark-bg .btn-outline {
+  border-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-dourado);
+}
+.dark-bg .btn-outline:hover, .dark-bg .btn-outline:focus {
+  background-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-preto);
+}
+/* Garante fundo branco e texto escuro na seção Educação */
+.page-section.light-bg-alt {
+  background-color: var(--ganjadao-branco) !important;
+  color: var(--ganjadao-preto) !important;
+}
+
+/* Se precisar ajustar ícones e botões dentro dela: */
+.page-section.light-bg-alt .icon {
+  color: var(--ganjadao-dourado);
+}
+.page-section.light-bg-alt .btn-outline {
+  border-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-dourado);
+}
+.page-section.light-bg-alt .btn-outline:hover {
+  background-color: var(--ganjadao-dourado);
+  color: var(--ganjadao-branco);
+}
+/* 8. Media Queries (Responsividade)
+-------------------------------------------------- */
+
+/* Para telas menores (ex: mobile) */
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+
+  .main-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .main-nav a {
+    padding: 0.75rem 0;
+    display: block; /* Para ocupar a largura toda */
+  }
+  .main-header .btn-hc-sticky {
+    margin-top: 1rem;
+    align-self: flex-start;
+  }
+
+  .hero-section {
+    padding: 3rem 0;
+  }
+  .hero-section #hero-title {
+    font-size: 2.2rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr; /* Uma coluna no mobile */
+    text-align: center;
+  }
+  .footer-section h4 {
+    margin-top: 1.5rem;
+  }
+  .newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .newsletter-form input[type="email"] {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Ajustes para o menu hamburger se for implementado via JS */
+.menu-toggle {
+    display: none; /* Escondido por padrão, JS controla */
+    background: none;
+    border: none;
+    color: var(--ganjadao-branco);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        position: absolute; /* Ou ajuste conforme layout do header */
+        top: 15px;
+        right: 15px;
+    }
+    .main-nav {
+        display: none; /* Escondido por padrão, JS controla */
+        width: 100%;
+    }
+    .main-nav.active {
+        display: block; /* Mostra quando ativo */
+    }
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto !important;
+      margin: 0 auto;
+      padding: 1rem;
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+   
+    .navbar-ganjadao {
+      background-color: var(--ganjadao-verde-secundario);
+    }
+    
+    .navbar-ganjadao .navbar-nav .nav-link,
+    .navbar-ganjadao .navbar-brand,
+    .navbar-ganjadao .dropdown-toggle,
+    .navbar-ganjadao .dropdown-item {
+      color: var(--ganjadao-branco);
+    }
+    
+    .navbar-ganjadao .nav-link:hover,
+    .navbar-ganjadao .dropdown-item:hover {
+      color: var(--ganjadao-dourado);
+    }
+    }
+

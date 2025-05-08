@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta DAO Ativa: Gere seu HC Digital com 50% de Desconto! - GanjaDAO</title>
+    <link rel="stylesheet" href="/css/style.css"> <%-/* Adicionar o caminho correto para o CSS global */%>
+    <style>
+        .conteudo-pagina {
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .conteudo-pagina h1 {
+            color: #2c3e50; /* Exemplo de cor */
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .conteudo-pagina .subtitulo-oferta {
+            text-align: center;
+            font-size: 1.5em;
+            color: #e83e8c; /* Rosa para destaque da oferta */
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .conteudo-pagina h2 {
+            color: #34495e; /* Exemplo de cor */
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .conteudo-pagina p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .conteudo-pagina ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .conteudo-pagina li {
+            margin-bottom: 8px;
+        }
+        .bloco-oferta {
+            background-color: #fff3cd; /* Amarelo bem claro para o bloco da oferta */
+            border: 2px dashed #e83e8c; /* Borda tracejada rosa */
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px auto;
+            text-align: center;
+            max-width: 700px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .bloco-oferta h2 {
+            color: #e83e8c;
+            margin-top: 0;
+            font-size: 2em;
+        }
+        .bloco-oferta .preco-original {
+            text-decoration: line-through;
+            color: #6c757d;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        .bloco-oferta .preco-promocional {
+            color: #28a745; /* Verde para o preço com desconto */
+            font-size: 2.2em;
+            font-weight: bold;
+        }
+        .bloco-oferta .economia {
+            font-size: 1.1em;
+            color: #17a2b8; /* Azul para a economia */
+            margin-top: 5px;
+        }
+        .btn-aproveitar-oferta {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #e83e8c; /* Rosa */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-aproveitar-oferta:hover {
+            background-color: #c21b67; /* Rosa mais escuro */
+        }
+        .contador-oferta {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #dc3545; /* Vermelho para urgência */
+            margin-top: 15px;
+        }
+        .beneficios-lista li {
+            padding-left: 20px;
+            position: relative;
+        }
+        .beneficios-lista li::before {
+            content: "\2713"; /* Símbolo de check */
+            color: #28a745; /* Verde */
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <%- include("../partials/header") %>
+
+    <main class="container">
+        <section class="conteudo-pagina">
+            <h1>Oferta DAO Ativa: Proteja Seu Cultivo Agora!</h1>
+            <p class="subtitulo-oferta">Gere seu HC Digital com 50% de DESCONTO – Últimos Dias!</p>
+
+            <p>Atenção, comunidade GanjaDAO! Chegou a oportunidade que você esperava para garantir a tranquilidade e a segurança jurídica do seu cultivo medicinal. Sabemos que a jornada para obter um Habeas Corpus preventivo pode parecer complexa e, por vezes, custosa. Por isso, em um esforço para democratizar ainda mais o acesso à proteção legal, estamos lançando uma <strong>Oferta DAO Ativa</strong> imperdível: <strong>50% de desconto</strong> na geração do seu HC Digital através da nossa plataforma!</p>
+            <p>Esta é uma campanha com prazo limitado, pensada especialmente para você que entende a importância de cultivar com segurança, mas talvez estivesse adiando esse passo fundamental. Se você está na dúvida, inativo ou simplesmente esperando o momento certo, a hora é AGORA! Não deixe que a insegurança jurídica ameace seu tratamento ou sua paz de espírito.</p>
+
+            <div class="bloco-oferta">
+                <h2>PROMOÇÃO RELÂMPAGO GANJADAO!</h2>
+                <p>Seu Habeas Corpus Digital de:
+                    <span class="preco-original">R$ XXX,XX</span> por apenas
+                    <span class="preco-promocional">R$ YYY,YY</span>!
+                </p>
+                <p class="economia">Uma economia real de 50% para você investir na sua saúde e segurança!</p>
+                <p>(Valores exatos da promoção seriam definidos e inseridos aqui pela equipe GanjaDAO)</p>
+                
+                <a href="/plataforma-hc" class="btn-aproveitar-oferta">QUERO MEU HC COM 50% OFF!</a>
+                
+                <div class="contador-oferta" id="contador">
+                    Oferta válida somente até [Data Final da Promoção]! Corra, o tempo está acabando!
+                    <br>
+                    <span id="dias">00</span>d : <span id="horas">00</span>h : <span id="minutos">00</span>m : <span id="segundos">00</span>s
+                </div>
+            </div>
+
+            <h2>Por que Aproveitar Esta Oferta Exclusiva da GanjaDAO?</h2>
+            <p>Obter um Habeas Corpus preventivo é o passo mais importante para quem realiza o autocultivo de cannabis para fins medicinais no Brasil. Ele é a sua principal ferramenta de defesa contra possíveis intercorrências legais, garantindo que seu direito à saúde e ao tratamento seja respeitado. Com a plataforma HC Digital da GanjaDAO, esse processo se torna mais simples, ágil e, agora, incrivelmente acessível:</p>
+            <ul class="beneficios-lista">
+                <li><strong>Segurança Jurídica Reforçada:</strong> Cultive com a tranquilidade de estar amparado por uma decisão judicial que reconhece a legalidade do seu tratamento.</li>
+                <li><strong>Processo Simplificado e Guiado:</strong> Nossa plataforma intuitiva orienta você em cada etapa, desde a coleta de documentos até a geração da minuta da sua petição.</li>
+                <li><strong>Baseado em Jurisprudência Atualizada:</strong> As minutas são elaboradas com base nas teses jurídicas mais recentes e vitoriosas nos tribunais brasileiros.</li>
+                <li><strong>Economia de Tempo e Dinheiro:</strong> Reduza significativamente os custos e a burocracia envolvidos na obtenção de um HC. Com esta oferta, o investimento é ainda menor!</li>
+                <li><strong>Suporte da Comunidade GanjaDAO:</strong> Ao fazer parte da nossa rede, você tem acesso a informações, suporte e à força de uma comunidade unida pela mesma causa.</li>
+                <li><strong>Confidencialidade e Segurança de Dados:</strong> Suas informações são tratadas com o mais alto rigor de sigilo e proteção, em conformidade com a LGPD.</li>
+            </ul>
+
+            <h2>Para Quem é Esta Oferta?</h2>
+            <p>Esta oferta é para todos os cultivadores medicinais que buscam segurança jurídica, incluindo:</p>
+            <ul>
+                <li>Pacientes que necessitam do autocultivo para garantir seu tratamento.</li>
+                <li>Pais e responsáveis que cultivam para seus filhos ou dependentes.</li>
+                <li>Pessoas que já possuem laudo e prescrição médica para uso de cannabis.</li>
+                <li>Aqueles que consideram o custo dos produtos industrializados ou importados inviável.</li>
+                <li>Qualquer pessoa que deseje se precaver contra os riscos da criminalização e cultivar com paz de espírito.</li>
+            </ul>
+            <p>Se você se enquadra em algum desses perfis e ainda não possui seu HC preventivo, esta é a sua chance de ouro!</p>
+
+            <h2>Não Deixe para Depois! A Hora de Agir é Agora!</h2>
+            <p>A insegurança jurídica pode gerar ansiedade e comprometer até mesmo os benefícios do seu tratamento. Não corra riscos desnecessários. A GanjaDAO está oferecendo esta condição especial por tempo limitado porque acreditamos que todos têm o direito de cultivar seu remédio com segurança e dignidade. Esta é uma ação direta para converter aqueles leads que estão na dúvida ou que estavam esperando um incentivo financeiro.</p>
+            <p>Lembre-se: a legislação brasileira ainda é complexa, e a prevenção é sempre o melhor caminho. Um Habeas Corpus preventivo é um escudo poderoso que pode evitar muita dor de cabeça e garantir a continuidade do seu tratamento. Com 50% de desconto, o acesso a essa proteção nunca esteve tão fácil.</p>
+
+            <div style="text-align:center; margin-top:30px;">
+                <p><strong>Clique no botão abaixo, faça seu cadastro ou login na plataforma GanjaDAO e garanta seu HC Digital com um desconto que você não verá novamente tão cedo!</strong></p>
+                <a href="/plataforma-hc" class="btn-aproveitar-oferta">GARANTIR MEU DESCONTO DE 50% AGORA!</a>
+            </div>
+
+            <p style="text-align:center; margin-top:20px; font-size:0.9em; color:#6c757d;">
+                <em>Dúvidas? Entre em contato com nossa equipe de suporte. Estamos prontos para ajudar você a dar esse passo importante rumo à sua segurança e tranquilidade.</em>
+            </p>
+            <p style="text-align:center; font-size:0.9em; color:#6c757d;">
+                <em>Esta oferta é uma iniciativa da GanjaDAO para fortalecer a comunidade e promover o acesso à justiça. Compartilhe com quem precisa!</em>
+            </p>
+
+        </section>
+    </main>
+
+    <%- include("../partials/footer") %>
+
+    <script>
+        // Script simples para o contador regressivo (exemplo)
+        // Adapte com a data final real da promoção
+        const dataFinalPromocao = new Date("Dec 31, 2025 23:59:59").getTime(); // SUBSTITUA PELA DATA REAL
+
+        const contadorElement = document.getElementById("contador");
+        const diasEl = document.getElementById("dias");
+        const horasEl = document.getElementById("horas");
+        const minutosEl = document.getElementById("minutos");
+        const segundosEl = document.getElementById("segundos");
+
+        if (contadorElement) {
+            const atualizarContador = setInterval(function() {
+                const agora = new Date().getTime();
+                const distancia = dataFinalPromocao - agora;
+
+                const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+                const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+                if (diasEl) diasEl.innerHTML = dias < 10 ? "0" + dias : dias;
+                if (horasEl) horasEl.innerHTML = horas < 10 ? "0" + horas : horas;
+                if (minutosEl) minutosEl.innerHTML = minutos < 10 ? "0" + minutos : minutos;
+                if (segundosEl) segundosEl.innerHTML = segundos < 10 ? "0" + segundos : segundos;
+
+                if (distancia < 0) {
+                    clearInterval(atualizarContador);
+                    contadorElement.innerHTML = "OFERTA ENCERRADA!";
+                }
+            }, 1000);
+        }
+    </script>
+    <script src="/js/main.js"></script> <%-/* Adicionar o caminho correto para o JS global */%>
+</body>
+</html>
+

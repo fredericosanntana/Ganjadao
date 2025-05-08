@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <main class="container">
+        <section class="jurisprudencia-detalhes-section">
+            <div class="back-link">
+                <a href="/juridico/jurisprudencia" class="btn btn-outline">← Voltar para Jurisprudência</a>
+            </div>
+            
+            <div class="jurisprudencia-header">
+                <h1>Detalhes da Jurisprudência</h1>
+                <div class="processo-info">
+                    <h2>Processo: <%= jurisprudencia.numeroProcesso %></h2>
+                    <span class="resultado <%= jurisprudencia.resultado %>"><%= jurisprudencia.resultado === 'deferido' ? 'DEFERIDO' : jurisprudencia.resultado === 'indeferido' ? 'INDEFERIDO' : 'PARCIALMENTE DEFERIDO' %></span>
+                </div>
+            </div>
+            
+            <div class="jurisprudencia-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Tribunal:</span>
+                    <span class="meta-value"><%= jurisprudencia.tribunal %></span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Estado:</span>
+                    <span class="meta-value"><%= jurisprudencia.estado %></span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Desembargador:</span>
+                    <span class="meta-value"><%= jurisprudencia.desembargador %></span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Data da Decisão:</span>
+                    <span class="meta-value"><%= new Date(jurisprudencia.dataDecisao).toLocaleDateString('pt-BR') %></span>
+                </div>
+            </div>
+            
+            <div class="jurisprudencia-content">
+                <div class="content-section">
+                    <h3>Ementa</h3>
+                    <div class="content-text">
+                        <%= jurisprudencia.ementa %>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h3>Decisão</h3>
+                    <div class="content-text">
+                        <%= jurisprudencia.decisao %>
+                    </div>
+                </div>
+                
+                <div class="jurisprudencia-info">
+                    <div class="info-item">
+                        <span class="info-label">Quantidade de Plantas:</span>
+                        <span class="info-value"><%= jurisprudencia.quantidadePlantas %></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tipo de Uso:</span>
+                        <span class="info-value"><%= jurisprudencia.tipoUso %></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="jurisprudencia-actions">
+                <h3>Ações</h3>
+                <div class="actions-buttons">
+                    <a href="#" class="btn btn-primary" onclick="window.print(); return false;">Imprimir Decisão</a>
+                    <a href="/juridico/habeas-corpus" class="btn btn-secondary">Gerar Habeas Corpus</a>
+                    <a href="/juridico/documentos" class="btn btn-secondary">Acessar Documentos</a>
+                </div>
+            </div>
+            
+            <div class="jurisprudencia-disclaimer">
+                <p><strong>Nota:</strong> Esta decisão é apresentada para fins educacionais e informativos. Cada caso possui suas particularidades e a decisão pode variar conforme as circunstâncias específicas.</p>
+            </div>
+        </section>
+    </main>
+    
+    <%- include('../partials/footer') %>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>
