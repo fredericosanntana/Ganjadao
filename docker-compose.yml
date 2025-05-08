@@ -1,34 +1,21 @@
-services:
+sservices:
   ganjadao-app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ganjadao:latest
     container_name: ganjadao-app
     restart: always
     environment:
       - NODE_ENV=production
     labels:
       - "traefik.enable=true"
-      # redireciona HTTP → HTTPS
-      - "traefik.http.routers.ganjadao-http.rule=Host(`ganjadao.app`)"
-      - "traefik.http.routers.ganjadao-http.entrypoints=web"
-      - "traefik.http.routers.ganjadao-http.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      # rota HTTPS
       - "traefik.http.routers.ganjadao.rule=Host(`ganjadao.app`)"
       - "traefik.http.routers.ganjadao.entrypoints=websecure"
       - "traefik.http.routers.ganjadao.tls.certresolver=myresolver"
-      # expõe a porta interna do Node
       - "traefik.http.services.ganjadao.loadbalancer.server.port=3000"
     networks:
       - dao_default
-      - traefik
-
-volumes:
-  letesencrypt: {}  # onde o Traefik guarda os certificados
-  ganjadao-logs: {}
 
 networks:
-  web:
-    driver: bridge
+  dao_default:
+    external: true
