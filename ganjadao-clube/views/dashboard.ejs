@@ -9,13 +9,23 @@
     
     <div class="card mt-2">
       <h3>Minha Assinatura</h3>
+      
+      <script async
+      src="https://js.stripe.com/v3/buy-button.js">
+      </script>
+
+      <stripe-buy-button
+        buy-button-id="buy_btn_1RMvycCCYDgGdZBPDYvtLZwP"
+        publishable-key="pk_live_51NId4cCCYDgGdZBP0si2scOKJoayvAjn7zLTuKBLaarOICpyjSYnWRz4ADS7Xn84xS7Pphw5FRq8twLGJrFXXsMj00A4HuLzGR"
+        >
+</stripe-buy-button>
       <% if (user.isSubscribed) { %>
         <p>Status: <span style="color: green;">Ativa</span></p>
         <p>Obrigado por apoiar a GanjaDAO!</p>
       <% } else { %>
         <p>Status: <span style="color: red;">Inativa</span></p>
         <p>Considere se tornar um assinante para apoiar nossa causa e participar das votações.</p>
-        <a href="subscription" class="btn btn-primary">Ver Planos de Assinatura</a>
+        <a href="subscription" class="btn btn-primary">Gerenciar Assinatura</a>
       <% } %>
     </div>
 
