@@ -25,6 +25,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
-        context: ./ganjadao-clube
+        context: .
         push: true
         tags: fredericosanntana/dao-ganjadao-app:latest
