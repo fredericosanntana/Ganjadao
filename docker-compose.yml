@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: "${DOCKERHUB_USERNAME}/dao-ganjadao-app:latest"
     container_name: ganjadao-app
     restart: always
     environment:
@@ -14,14 +15,19 @@ services:
       - "traefik.http.routers.ganjadao-http.entrypoints=web"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.ganjadao-http.middlewares=redirect-to-https"
-      # HTTPS
+      # Roteamento HTTPS
       - "traefik.http.routers.ganjadao.rule=Host(`ganjadao.dpo2u.com`)"
       - "traefik.http.routers.ganjadao.entrypoints=websecure"
       - "traefik.http.routers.ganjadao.tls.certresolver=myresolver"
       - "traefik.http.services.ganjadao.loadbalancer.server.port=3000"
+    volumes:
+      # Banco SQLite persistente
+      - sqlite-data:/app/ganjadao-clube/db
     networks:
       - dao_default
 
 networks:
+  dao_default:
+    external: true
   dao_default:
     external: true
