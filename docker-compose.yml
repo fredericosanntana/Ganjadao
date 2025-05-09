@@ -11,12 +11,10 @@ services:
       POSTGRES_PASSWORD: senhasegura
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    networks:
-      - dao_default
 
   ganjadao-app:
     build:
-      context: .            # onde está o Dockerfile
+      context: .
       dockerfile: Dockerfile
     container_name: ganjadao-app
     restart: always
@@ -26,12 +24,12 @@ services:
       DATABASE_URL: postgres://ganja:senhasegura@db:5432/ganjadao
     labels:
       - "traefik.enable=true"
-      # redireciona HTTP → HTTPS
+      # redireciona HTTP→HTTPS
       - "traefik.http.routers.http-to-https.rule=Host(`ganjadao.dpo2u.com`)"
       - "traefik.http.routers.http-to-https.entrypoints=web"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.http-to-https.middlewares=redirect-to-https"
-      # roteia tráfego HTTPS para o app
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # rota principal
       - "traefik.http.routers.ganjadao.rule=Host(`ganjadao.dpo2u.com`)"
       - "traefik.http.routers.ganjadao.entrypoints=websecure"
       - "traefik.http.routers.ganjadao.tls.certresolver=myresolver"
@@ -43,6 +41,7 @@ services:
 
 volumes:
   postgres-data:
+    external: false
 
 networks:
   dao_default:
