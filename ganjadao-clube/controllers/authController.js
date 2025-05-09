@@ -153,7 +153,7 @@ exports.loginUser = (req, res) => {
                 if (user.is_admin === 1) {
                     res.redirect("/admin/dashboard");
                 } else {
-                    res.redirect("/dashboard");
+                    res.redirect("/clube/dashboard");
                 }
             } else {
                 return res.render("auth/login", { title: "Login - GanjaDAO", messages: { error_msg: "Senha incorreta." }, formData: { identifier } });

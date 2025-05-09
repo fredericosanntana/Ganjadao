@@ -5,7 +5,7 @@ const path          = require("path");
 const bodyParser    = require("body-parser");
 const session       = require("express-session");
 const SQLiteStore   = require("connect-sqlite3")(session);
-require("../db/database"); // inicializa o DB (sem exportar)
+require("./db/database"); // inicializa o DB (sem exportar)
 
 // Importa rotas como sub-app routers
 const authRoutes         = require("./routes/authRoutes");

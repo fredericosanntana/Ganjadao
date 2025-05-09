@@ -157,18 +157,18 @@
         <h1><a href="/">GanjaDAO Clube</a></h1>
         <nav>
             <ul>
-                <li><a href="/">Início</a></li>
+                <li><a href="/clube">Início</a></li>
                 <% if (isAuthenticated) { %>
-                    <li><a href="/dashboard">Painel</a></li>
-                    <li><a href="/initiatives">Votações</a></li>
-                    <li><a href="/subscription">Minha Assinatura</a></li>
+                    <li><a href="dashboard">Painel</a></li>
+                    <li><a href="initiatives">Votações</a></li>
+                    <li><a href="subscription">Minha Assinatura</a></li>
                     <% if (isAdmin) { %>
                         <li><a href="/admin/dashboard">Admin</a></li>
                     <% } %>
                     <li class="auth-links"><a href="/auth/logout">Sair</a></li>
                 <% } else { %>
-                    <li class="auth-links"><a href="/auth/login">Login</a></li>
-                    <li class="auth-links"><a href="/auth/register">Registrar</a></li>
+                    <li class="auth-links"><a href="auth/login">Login</a></li>
+                    <li class="auth-links"><a href="auth/register">Registrar</a></li>
                 <% } %>
             </ul>
         </nav>

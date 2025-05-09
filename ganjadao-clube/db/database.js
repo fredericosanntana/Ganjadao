@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
-const dbPath = process.env.DATABASE_PATH || path.join(__dirname, '..', 'db', 'ganjadao.db');
+const dbPath = process.env.DATABASE_PATH || path.join(__dirname, 'ganjadao.db');
 console.log("⤷ process.cwd():", process.cwd());
 console.log("⤷ __dirname:", __dirname);
 console.log("⤷ Usando dbPath:", dbPath);

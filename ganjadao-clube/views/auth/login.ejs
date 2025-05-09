@@ -10,7 +10,7 @@
         <div class="alert alert-success"><%= messages.success_msg %></div>
     <% } %>
 
-    <form action="/auth/login" method="POST">
+    <form action="../auth/login" method="POST">
         <div class="form-group">
             <label for="identifier">Usuário ou Email</label>
             <input type="text" id="identifier" name="identifier" value="<%= typeof formData !== 'undefined' ? formData.identifier : '' %>" required>
@@ -21,7 +21,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
-    <p class="mt-1">Não tem uma conta? <a href="/auth/register">Registre-se aqui</a>.</p>
+    <p class="mt-1">Não tem uma conta? <a href="register">Registre-se aqui</a>.</p>
 </div>
 
 <%- include("../partials/footer") %>

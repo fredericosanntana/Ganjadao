@@ -9,7 +9,8 @@ router.get("/", (req, res) => {
 
 router.get("/dashboard", (req, res) => {
     if (!req.session.user) {
-        return res.redirect("/auth/login?unauthorized=true");
+        return res.redirect("/clube/auth/login?unauthorized=true");
+
     }
     res.render("dashboard", { title: "Painel do Usuário", user: req.session.user });
 });
