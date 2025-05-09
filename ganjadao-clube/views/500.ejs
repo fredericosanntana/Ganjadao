@@ -1,0 +1,17 @@
+<%- include("partials/header") %>
+
+<div class="container text-center">
+    <h1 class="display-1">Erro no Servidor</h1>
+    <h2><%= error.status || 500 %></h2>
+    <p>Ocorreu um erro inesperado em nosso servidor. Já fomos notificados e estamos trabalhando para corrigir.</p>
+    <p>Por favor, tente novamente mais tarde.</p>
+    <% if (error && error.message) { %>
+      <pre><%= error.message %></pre>
+    <% } %>
+    <% if (error && error.stack) { %>
+      <pre><%= error.stack %></pre>
+    <% } %>
+    <a href="/" class="btn btn-primary mt-2">Voltar para a Página Inicial</a>
+</div>
+
+<%- include("partials/footer") %>

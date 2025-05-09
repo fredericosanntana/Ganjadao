@@ -1,0 +1,43 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <h2>Painel do Usuário</h2>
+
+    <% if (user) { %>
+        <p>Bem-vindo(a) de volta, <strong><%= user.username %></strong>!</p>
+        <p>Email: <%= user.email %></p>
+        
+        <div class="card mt-2">
+            <h3>Minha Assinatura</h3>
+            <% if (user.isSubscribed) { %>
+                <p>Status: <span style="color: green;">Ativa</span></p>
+                <p>Obrigado por apoiar a GanjaDAO!</p>
+            <% } else { %>
+                <p>Status: <span style="color: red;">Inativa</span></p>
+                <p>Considere se tornar um assinante para apoiar nossa causa e participar das votações.</p>
+                <a href="/subscription" class="btn btn-primary">Ver Planos de Assinatura</a>
+            <% } %>
+        </div>
+
+        <div class="card mt-2">
+            <h3>Votações Abertas</h3>
+            <p>No momento, não há votações abertas ou esta funcionalidade ainda está em desenvolvimento.</p>
+            <a href="/initiatives" class="btn btn-secondary">Ver Iniciativas</a>
+        </div>
+
+        <% if (user.is_admin) { %>
+            <div class="card mt-2">
+                <h3>Painel Administrativo</h3>
+                <p>Você tem acesso ao painel de administração.</p>
+                <a href="/admin/dashboard" class="btn btn-danger">Acessar Admin</a>
+            </div>
+        <% } %>
+
+    <% } else { %>
+        <p>Ocorreu um erro ao carregar as informações do usuário. Por favor, tente fazer login novamente.</p>
+        <a href="/auth/login" class="btn">Login</a>
+    <% } %>
+</div>
+
+<%- include("partials/footer") %>
+

@@ -1,0 +1,352 @@
+/* Paleta GanjaDAO */
+:root {
+    --verde-escuro: #1A3B2A;
+    --verde-claro: #8BC34A;
+    --roxo-profundo: #6D4C85;
+    --dourado: #C5A942;
+    --cinza-escuro: #0D1A13;
+    --cinza-claro: #F5F5F5;
+    --branco: #FFFFFF;
+    --cinza-medio: #e0e0e0;
+    --texto-padrao: #222222;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cinza-claro);
+    color: var(--texto-padrao);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--branco);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+header {
+    background-color: var(--cinza-escuro);
+    color: var(--branco);
+    padding: 1.5em 0;
+    text-align: center;
+    border-bottom: 5px solid var(--verde-claro);
+}
+
+header h1 a {
+    color: var(--branco);
+    text-decoration: none;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+    text-align: center;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: var(--verde-claro);
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active {
+    color: var(--dourado);
+    text-shadow: 0 0 5px var(--dourado);
+}
+
+.auth-links {
+    /* Estilização específica se necessário, já está no header.ejs */
+}
+
+h1, h2, h3 {
+    color: var(--roxo-profundo);
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 2.2em;
+    margin-bottom: 0.8em;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 0.6em;
+    border-bottom: 2px solid var(--cinza-medio);
+    padding-bottom: 0.3em;
+}
+
+h3 {
+    font-size: 1.4em;
+    color: var(--verde-escuro);
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: var(--verde-claro);
+    color: var(--cinza-escuro);
+}
+
+.btn-primary {
+    background-color: var(--verde-escuro); /* Cor primária — botões, header, chamadas principais */
+}
+.btn-primary:hover {
+    background-color: var(--verde-claro); /* Destaques */
+}
+
+.btn-secondary {
+    background-color: var(--roxo-profundo);
+}
+
+.btn-secondary:hover {
+    background-color: var(--dourado);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--verde-escuro);
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+    width: calc(100% - 24px); /* Considera padding */
+    padding: 12px;
+    border: 1px solid var(--cinza-medio);
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.alert-success {
+    color: var(--verde-escuro);
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+}
+
+.alert-danger,
+.error-message {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+.alert-info {
+    color: #052c65;
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+}
+
+
+footer {
+    text-align: center;
+    padding: 25px 0;
+    margin-top: 40px;
+    background-color: var(--cinza-escuro);
+    color: var(--cinza-claro);
+    font-size: 0.9em;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* Estilos para cartões de iniciativa */
+.initiative-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.initiative-card {
+    border: 1px solid var(--cinza-medio);
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--branco);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.initiative-card h3 {
+    color: var(--verde-escuro);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.initiative-card p {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.initiative-card .btn {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Estilos para votação quadrática */
+.vote-form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.vote-slider-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.vote-slider-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.vote-slider-container input[type="range"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.vote-credits-display {
+    font-weight: bold;
+    color: var(--roxo-profundo);
+    margin-left: 10px;
+    font-size: 1.1em;
+}
+
+.total-credits-info {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: var(--cinza-medio);
+    border-radius: 5px;
+    border: 1px solid var(--dourado);
+}
+
+.total-credits-info p {
+    margin: 8px 0;
+    font-size: 1.05em;
+}
+
+.total-credits-info strong {
+    color: var(--verde-escuro);
+}
+
+/* Página de Admin */
+.admin-dashboard table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-dashboard th, .admin-dashboard td {
+    border: 1px solid var(--cinza-medio);
+    padding: 12px;
+    text-align: left;
+}
+
+.admin-dashboard th {
+    background-color: var(--cinza-escuro);
+    color: var(--branco);
+}
+
+.admin-dashboard tr:nth-child(even) {
+    background-color: var(--cinza-claro);
+}
+
+/* Mensagens */
+.messages-container {
+    margin-bottom: 20px;
+}
+
+/* Links de navegação ativos */
+.nav-active {
+    color: var(--dourado) !important;
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: var(--roxo-profundo);
+    margin-bottom: 15px;
+}
+
+

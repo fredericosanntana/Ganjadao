@@ -1,0 +1,46 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <h2>Bem-vindo ao Clube de Assinaturas GanjaDAO!</h2>
+    <p>Junte-se à nossa comunidade para apoiar a causa e participar das decisões sobre nossas iniciativas através de um sistema de votação quadrática.</p>
+    <p>Sua voz é fundamental para construirmos juntos um futuro mais justo e informado sobre a Cannabis no Brasil.</p>
+    
+    <% if (!isAuthenticated) { %>
+        <div class="mt-2">
+            <a href="/auth/register" class="btn btn-primary">Crie sua Conta</a>
+            <a href="/auth/login" class="btn btn-secondary">Faça Login</a>
+        </div>
+    <% } else { %>
+        <div class="mt-2">
+            <p>Você já está logado. Explore o <a href="/dashboard">seu painel</a> ou veja as <a href="/initiatives">votações abertas</a>.</p>
+        </div>
+    <% } %>
+
+    <div class="mt-2 card">
+        <h3>Nossa Missão</h3>
+        <p>A GanjaDAO é uma iniciativa LegalTech ativista que visa proteger cultivadores de Cannabis no Brasil por meio de educação jurídica acessível, automação de Habeas Corpus preventivo, uso estratégico de provas públicas (redes sociais + blockchain) e mobilização coletiva. </p>
+        <p>Nosso objetivo é criar um sistema de proteção descentralizado onde cada cultivador possa impetrar seu próprio HC com autonomia e segurança.</p>
+    </div>
+
+    <div class="mt-2 card">
+        <h3>Por que Assinar por R$4,20?</h3>
+        <p>Sua contribuição mensal de R$4,20 nos ajuda a manter e expandir nossas ferramentas e ações, como:</p>
+        <ul>
+            <li>Gerador de Habeas Corpus automatizado</li>
+            <li>Kit de proteção com provas públicas</li>
+            <li>Curso de autoproteção jurídica</li>
+            <li>Desenvolvimento contínuo da plataforma e novas iniciativas</li>
+        </ul>
+        <p>Além disso, como assinante, você participa ativamente das decisões da GanjaDAO através do nosso sistema de votação quadrática.</p>
+        <% if (!isAuthenticated) { %>
+        <a href="/auth/register" class="btn btn-primary">Quero Apoiar e Participar!</a>
+        <% } else if (currentUser && !currentUser.isSubscribed) { %> 
+            <!-- Lógica para mostrar botão de assinatura se o usuário estiver logado mas não for assinante -->
+            <a href="/subscription" class="btn btn-primary">Seja um Assinante!</a>
+        <% } %>
+    </div>
+
+</div>
+
+<%- include("partials/footer") %>
+

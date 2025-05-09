@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F5F5F5; /* Cinza Claro */
+            color: #222222; /* Texto Padrão */
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #FFFFFF; /* Branco */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        header {
+            background-color: #0D1A13; /* Cinza Escuro */
+            color: #FFFFFF;
+            padding: 1em 0;
+            text-align: center;
+        }
+        header h1 a {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+        header nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        header nav ul li a {
+            color: #8BC34A; /* Verde Claro */
+            text-decoration: none;
+        }
+        header nav ul li a:hover {
+            color: #C5A942; /* Dourado */
+        }
+        .auth-links {
+            float: right;
+            margin-right: 20px;
+        }
+
+        h1, h2 {
+            color: #6D4C85; /* Roxo Profundo */
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #1A3B2A; /* Verde Escuro */
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #8BC34A; /* Verde Claro */
+            color: #0D1A13;
+        }
+        .btn-secondary {
+            background-color: #6D4C85; /* Roxo Profundo */
+        }
+        .btn-secondary:hover {
+            background-color: #C5A942; /* Dourado */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #1A3B2A; /* Verde Escuro */
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #e0e0e0; /* Cinza Médio */
+            border-radius: 4px;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-success {
+            color: #1A3B2A;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            background-color: #0D1A13; /* Cinza Escuro */
+            color: #F5F5F5; /* Cinza Claro */
+        }
+
+        /* Estilos para votação quadrática */
+        .initiative-card {
+            border: 1px solid #e0e0e0; /* Cinza Médio */
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #FFFFFF;
+        }
+        .initiative-card h3 {
+            color: #1A3B2A; /* Verde Escuro */
+        }
+        .vote-slider-container {
+            margin-top: 10px;
+        }
+        .vote-slider-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .vote-slider-container input[type="range"] {
+            width: 80%;
+        }
+        .vote-credits-display {
+            font-weight: bold;
+            color: #6D4C85; /* Roxo Profundo */
+        }
+        .total-credits-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0; /* Cinza Médio */
+            border-radius: 5px;
+        }
+        .total-credits-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="/">GanjaDAO Clube</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <% if (isAuthenticated) { %>
+                    <li><a href="/dashboard">Painel</a></li>
+                    <li><a href="/initiatives">Votações</a></li>
+                    <li><a href="/subscription">Minha Assinatura</a></li>
+                    <% if (isAdmin) { %>
+                        <li><a href="/admin/dashboard">Admin</a></li>
+                    <% } %>
+                    <li class="auth-links"><a href="/auth/logout">Sair</a></li>
+                <% } else { %>
+                    <li class="auth-links"><a href="/auth/login">Login</a></li>
+                    <li class="auth-links"><a href="/auth/register">Registrar</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <%- include("../partials/messages") %>
+
