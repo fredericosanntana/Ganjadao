@@ -1,12 +1,23 @@
 services:
+  db:
+    image: postgres:14
+    container_name: ganjadao-db
+    restart: always
+    environment:
+      POSTGRES_DB: ganjadao
+      POSTGRES_USER: ganja
+      POSTGRES_PASSWORD: senhasegura
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
   ganjadao-app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: "${DOCKERHUB_USERNAME}/dao-ganjadao-app:latest"
     container_name: ganjadao-app
     restart: always
     environment:
+<<<<<<< HEAD
       - NODE_ENV=production
     labels:
       - "traefik.enable=true"
@@ -16,18 +27,46 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.routers.ganjadao-http.middlewares=redirect-to-https"
       # Roteamento HTTPS
+=======
+      NODE_ENV: production
+      SESSION_SECRET: ${SESSION_SECRET}
+      DATABASE_URL: postgres://ganja:senhasegura@db:5432/ganjadao
+    labels:
+      - "traefik.enable=true"
+      # redireciona HTTP→HTTPS
+      - "traefik.http.routers.http-to-https.rule=Host(`ganjadao.dpo2u.com`)"
+      - "traefik.http.routers.http-to-https.entrypoints=web"
+      - "traefik.http.routers.http-to-https.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # rota principal
+>>>>>>> a62c95b (Switch to PostgreSQL and configure Portainer stack)
       - "traefik.http.routers.ganjadao.rule=Host(`ganjadao.dpo2u.com`)"
       - "traefik.http.routers.ganjadao.entrypoints=websecure"
       - "traefik.http.routers.ganjadao.tls.certresolver=myresolver"
       - "traefik.http.services.ganjadao.loadbalancer.server.port=3000"
+<<<<<<< HEAD
     volumes:
       # Banco SQLite persistente
       - sqlite-data:/app/ganjadao-clube/db
+=======
+>>>>>>> a62c95b (Switch to PostgreSQL and configure Portainer stack)
     networks:
       - dao_default
+    depends_on:
+      - db
 
+<<<<<<< HEAD
 networks:
   dao_default:
     external: true
   dao_default:
     external: true
+=======
+volumes:
+  postgres-data:
+    external: false
+
+networks:
+  dao_default:
+    external: true
+>>>>>>> a62c95b (Switch to PostgreSQL and configure Portainer stack)
